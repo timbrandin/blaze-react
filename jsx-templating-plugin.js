@@ -6,17 +6,31 @@ var handler = function (compileStep) {
 
   // Split out event maps.
   var eventMaps = source.split(/Template\.([^\.]+)\.events\(\{/i);
-  // console.log(eventMaps);
   for(var i = 1; i <= eventMaps.length-1; i+=2) {
     var className = eventMaps[i];
-    // Split out the trailing end after the template.
+    // Split out the trailing end after the Template.Name.events.
     var eventMap = (eventMaps[i+1] + '').split(/\n\}\)/i);
     eventMap = (eventMap[0]|| '').trim();
     if (eventMap) {
-      var jsxEventMap = Babel.transformMeteor('module.exports = {' + eventMap + '};', {
-        sourceMap: false,
-        extraWhitelist: ["react"]
-      });
+      try {
+        var jsxEventMap = Babel.transformMeteor('module.exports = {' + eventMap + '};', {
+          sourceMap: false,
+          extraWhitelist: ["react"]
+        });
+      } catch(e) {
+        if (e.loc) {
+          // Babel error
+          compileStep.error({
+            message: e.message,
+            sourcePath: compileStep.inputPath,
+            line: e.loc.line,
+            column: e.loc.column
+          });
+          return;
+        } else {
+          throw e;
+        }
+      }
       var mapContent = jsxEventMap.code;
       if (mapContent) {
         var res = _eval(mapContent);
