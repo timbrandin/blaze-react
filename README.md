@@ -85,3 +85,5 @@ Template.Page.helpers({
 - [ ] .jsx template **events**
 - [ ] .jsx template **onRendered**
 - [ ] .jsx template **onDestroyed**
+- [ ] .jsx template **autorun**
+- [ ] .jsx template **subscribe**
