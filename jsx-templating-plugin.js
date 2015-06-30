@@ -17,6 +17,8 @@ var handler = function (compileStep) {
 
     // Fix that annoying issue with React, and allow usage of class.
     var markup = (code[0] || '').trim().replace(/\sclass=/g, ' className=');
+
+    // ES6 Template for React components.
     jsx += className + " = React.createClass({displayName: \"" + className + "\",\n";
     jsx += "  _created: false,\n";
     jsx += "  mixins: [ReactMeteorData],\n";
@@ -37,7 +39,7 @@ var handler = function (compileStep) {
     jsx += "    return (" + markup + ");";
     jsx += "  }\n";
     jsx += "});\n";
-    extras += (code[1] || '\n');
+    extras += (code[1] || '');
   }
 
   var outputFile = compileStep.inputPath + ".js";
