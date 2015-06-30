@@ -41,7 +41,7 @@ var handler = function (compileStep) {
               var selector = selectors[j].split(' ');
               var event = selector[0];
               var select = selector[1];
-              var $ = cheerio.load('<Page class="yo">{hej}</Page>');
+              var $ = cheerio.load('<ol>\n{results.map(function(result) {\nreturn <li key={result.id}>{result.text}</li>;\n})}\n</ol>');
               $(select).attr("onClick", "this.events['" + selectors[j] + "']");
               console.log($.html());
               // console.log(event, CSSselect.compile(select));
