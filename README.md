@@ -17,9 +17,9 @@ meteor add timbrandin:jsx-templating
 * https://github.com/timbrandin/meteor-iosmorphic-react-templating
 * http://jsx-templating.meteor.com/
 
-## Get started
+## Getting started
 
-**Simple example, create a component named Page.**
+###Simple example, create a component named Page.
 
 ```jsx
 <template name="Page">
@@ -43,7 +43,7 @@ Page = React.createClass({displayName: "Page",
 
 > Notice! For this to work use ```.html.jsx``` instead of ```.jsx``` on your template files.
 
-**Advanced example, helpers and onCreated**
+### Advanced example, helpers and onCreated
 
 This example requires you've added ReactiveVar:
 ```bash
