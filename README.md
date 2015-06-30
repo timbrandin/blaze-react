@@ -19,7 +19,7 @@ meteor add timbrandin:jsx-templating
 
 ## Getting started
 
-###Simple example, create a component named Page.
+### Simple example, create a component named Page.
 
 ```jsx
 <template name="Page">
