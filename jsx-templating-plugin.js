@@ -1,5 +1,46 @@
+// var CSSselect = Npm.require("CSSselect");
+var _eval = Npm.require('eval');
+var _select = Npm.require('cheerio-select');
+var cheerio = Npm.require('cheerio');
+
 var handler = function (compileStep) {
   var source = compileStep.read().toString('utf8');
+
+  // Split out event maps.
+  var eventMaps = source.split(/Template\.([^\.]+)\.events\(\{/i);
+  // console.log(eventMaps);
+  for(var i = 1; i <= eventMaps.length-1; i+=2) {
+    var className = eventMaps[i];
+    // Split out the trailing end after the template.
+    var eventMap = (eventMaps[i+1] + '').split(/\n\}\)/i);
+    eventMap = (eventMap[0]|| '').trim();
+    if (eventMap) {
+      var jsxEventMap = Babel.transformMeteor('module.exports = {' + eventMap + '};', {
+        sourceMap: false,
+        extraWhitelist: ["react"]
+      });
+      var mapContent = jsxEventMap.code;
+      if (mapContent) {
+        var res = _eval(mapContent);
+        if (typeof res == 'object') {
+          for(var key in res) {
+            var selectors = key.split(',');
+            for(var j=0; j < selectors.length; j++) {
+              var selector = selectors[j].split(' ');
+              var event = selector[0];
+              var select = selector[1];
+              var $ = cheerio.load('<Page class="yo">{hej}</Page>');
+              $(select).attr("onClick", "this.events['" + selectors[j] + "']");
+              console.log($.html());
+              // console.log(event, CSSselect.compile(select));
+            }
+          }
+        }
+        // console.log(res);
+      }
+    }
+  }
+
   var parts = source.split(/<template name="(\w+)">/i);
   var jsx = "\nvar Template = Template || {};\n";
   var extras = parts[0];

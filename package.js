@@ -15,7 +15,12 @@ Package.registerBuildPlugin({
   use: ['babel-compiler@5.4.7'],
   sources: [
     'jsx-templating-plugin.js'
-  ]
+  ],
+  npmDependencies: {
+    'cheerio': '0.7.0',
+    'eval': '0.1.0',
+    'cheerio-select': '0.0.3'
+  }
 });
 
 Package.onUse(function (api) {
