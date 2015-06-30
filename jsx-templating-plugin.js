@@ -1,6 +1,4 @@
-// var CSSselect = Npm.require("CSSselect");
 var _eval = Npm.require('eval');
-var _select = Npm.require('cheerio-select');
 var cheerio = Npm.require('cheerio');
 
 var handler = function (compileStep) {
