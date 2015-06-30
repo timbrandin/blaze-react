@@ -74,8 +74,8 @@ Template.Page.helpers({
 ## Features
 
 - [x] .jsx templates
-- [x] .jsx template helpers
-- [x] .jsx template onCreated
-- [ ] .jsx template events
-- [ ] .jsx template onRendered
-- [ ] .jsx template onDestroyed
+- [x] .jsx template **helpers**
+- [x] .jsx template **onCreated**
+- [ ] .jsx template **events**
+- [ ] .jsx template **onRendered**
+- [ ] .jsx template **onDestroyed**
