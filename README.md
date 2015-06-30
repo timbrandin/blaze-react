@@ -11,6 +11,11 @@ To install on Meteor 0.9 or later:
 meteor add timbrandin:jsx-templating
 ```
 
+## Demo
+
+* https://github.com/timbrandin/meteor-iosmorphic-react-templating
+* http://jsx-templating.meteor.com/
+
 ## Get started
 
 **Simple example, create a component named Page.**
