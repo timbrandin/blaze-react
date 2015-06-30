@@ -1,5 +1,5 @@
   # JSX templating
-  > JSX templating is a [Meteor](http://meteor.com) package which builds upon @stubilo's [JSX build plugin](https://github.com/meteor/react-packages/blob/master/packages/jsx) but goes a few step further and implements Blaze's **helpers** and **onCreated** to showcase why that API makes it so much easier. And also, as I'm a markup nazi, I like **indentation** and **class** (instead of className).
+  > JSX templating is a [Meteor](http://meteor.com) package which builds upon [@dgreensp](https://github.com/dgreensp)'s [JSX build plugin](https://github.com/meteor/react-packages/blob/master/packages/jsx) but goes a few step further and implements Blaze's **helpers** and **onCreated** to showcase why that API makes it so much easier. And also, as I'm a markup nazi, I like **indentation** and **class** (instead of className).
 
 ## Installation
 
