@@ -16,7 +16,7 @@ var handler = function (compileStep) {
     var code = parts[i+1].split(/<\/template>/i);
 
     // Fix that annoying issue with React, and allow usage of class.
-    var markup = (code[0] || '').trim().replace(/\sclass=/g, ' className=');
+    var markup = (code[0] || '').replace(/\sclass=/g, ' className=');
 
     // ES6 Template for React components.
     jsx += className + " = React.createClass({displayName: \"" + className + "\",\n";
