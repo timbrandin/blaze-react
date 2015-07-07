@@ -6,8 +6,11 @@ var handler = function (compileStep) {
   for(var i=1; i <= parts.length-1; i+=2) {
     var className = parts[i];
     jsx += "Template." + className + " = {\n";
+    jsx += "  _extend: {},\n";
+    jsx += "  _instance: {},\n";
     jsx += "  onCreated: function(f) {return this._onCreated = f || (this._onCreated || function(){})},\n";
     jsx += "  helpers: function(o) {return this._helpers = o || (this._helpers || {})},\n";
+    jsx += "  extend: function(o) {return _.extend(this._extend, o || {})}\n";
     jsx += "};\n";
   }
   for(var i=1; i <= parts.length-1; i+=2) {
@@ -19,9 +22,10 @@ var handler = function (compileStep) {
     var markup = (code[0] || '').replace(/\sclass=/g, ' className=');
 
     // ES6 Template for React components.
-    jsx += className + " = React.createClass({displayName: \"" + className + "\",\n";
+    jsx += "Template." + className + "._instance = {displayName: \"" + className + "\",\n";
     jsx += "  _created: false,\n";
     jsx += "  mixins: [ReactMeteorData],\n";
+    jsx += "  getInitialState: function() {_.extend(this, _.omit(Template." + className + "._extend, 'getInitialState')); return Template." + className + "._extend.getInitialState ? Template." + className + "._extend.getInitialState.call(this) : null;},\n";
     jsx += "  getMeteorData() {\n";
     jsx += "    let self = this;\n";
     jsx += "    if (!self._created) {\n";
@@ -38,7 +42,8 @@ var handler = function (compileStep) {
     jsx += "  render: function() {\n";
     jsx += "    return (" + markup + ");";
     jsx += "  }\n";
-    jsx += "});\n";
+    jsx += "};\n";
+    jsx += className + " = React.createClass(Template." + className + "._instance);";
     extras += (code[1] || '');
   }
 
@@ -60,6 +65,7 @@ var handler = function (compileStep) {
         line: e.loc.line,
         column: e.loc.column
       });
+
       return;
     } else {
       throw e;
