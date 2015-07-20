@@ -166,7 +166,7 @@ Page = React.createClass({displayName: "Page",
 ```
 -->
 
-### Component with click event handler
+### Component with click handler
 
 <table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">Compiled React</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
