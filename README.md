@@ -58,18 +58,17 @@ meteor add reactive-var
 </template>
 
 Template.Page.onCreated(function() {
-  let component = this;
-  component.name = new ReactiveVar('React');
+  this.name = new ReactiveVar('React');
+});
 
-  component.componentDidMount = function() {
-    setTimeout(function() {
-      component.name = new ReactiveVar('Blaze');
-    }, 2000);
-  };
+Template.Page.onComponentDidMount(function() {
+  setTimeout(() => {
+    this.name = new ReactiveVar('Blaze');
+  }, 2000);
 });
 
 Template.Page.helpers({
-  name: function() {
+  name() {
     return this.name.get();
   }
 });
