@@ -53,7 +53,7 @@ meteor add reactive-var
 ```jsx
 <template name="Page">
   <div class="page">
-    Hello {this.data.name}
+    Hello {{name}}
   </div>
 </template>
 
@@ -61,16 +61,16 @@ Template.Page.onCreated(function() {
   this.name = new ReactiveVar('React');
 });
 
-Template.Page.onComponentDidMount(function() {
-  setTimeout(() => {
-    this.name = new ReactiveVar('Blaze');
-  }, 2000);
-});
-
 Template.Page.helpers({
   name() {
     return this.name.get();
   }
+});
+
+Template.Page.onComponentDidMount(function() {
+  setTimeout(() => {
+    this.name.set('With a Blaze API');
+  }, 2000);
 });
 ```
 
