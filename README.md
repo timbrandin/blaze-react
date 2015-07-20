@@ -74,7 +74,7 @@ Template.Page.onComponentDidMount(function() {
 });
 ```
 
-> For this to work, keep the template, helpers and onCreated in this file for now, I haven't explored into the realm of allowing separate files.
+> For this to work, keep the template, helpers and onCreated in **one** file for now, I haven't explored into the realm of allowing separate files.
 
 ### Events example, adding onClick
 
