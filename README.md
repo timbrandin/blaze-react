@@ -17,7 +17,7 @@ meteor add timbrandin:sideburns
 
 ## Getting started
 
-### Simple example, a component named Page.
+### Simple example
 
 <table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React comparison</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
@@ -61,7 +61,7 @@ Page = React.createClass({displayName: "Page",
 ```
 -->
 
-### Advanced example, with helpers and onCreated
+### Advanced example
 
 <table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React comparison</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
@@ -96,7 +96,7 @@ Template.Page.onRendered(<span class="pl-k rich-diff-level-one">function</span>(
     <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span> <span class="pl-k rich-diff-level-one">=</span> <span class="pl-k rich-diff-level-one">new</span> <span class="pl-en rich-diff-level-one">ReactiveVar</span>(<span class="pl-s rich-diff-level-one"><span class="pl-pds">'</span>React<span class="pl-pds">'</span></span>);
     <span class="pl-k rich-diff-level-one">return</span> {
       <span class="pl-en rich-diff-level-one">name</span>() {
-        <span class="pl-k rich-diff-level-one">return</span> <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span>;
+        <span class="pl-k rich-diff-level-one">return</span> <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span>.get();
       }
     }
   },
@@ -150,7 +150,7 @@ Page = React.createClass({displayName: "Page",
     this.name = new ReactiveVar('React');
     return {
       name() {
-        return this.name;
+        return this.name.get();
       }
     }
   },
@@ -168,11 +168,21 @@ Page = React.createClass({displayName: "Page",
 ```
 -->
 
-### Events example, adding onClick
+### Events example
 
 <table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">Compiled React</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
+<pre class="unchanged rich-diff-level-one"><span class="pl-k">&lt;</span>template name<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+  <span class="pl-k">&lt;</span>div <span class="pl-k">class</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+    Hello world
+  <span class="pl-k">&lt;</span>/div<span class="pl-k">&gt;</span>
+<span class="pl-k">&lt;</span>/template<span class="pl-k">&gt;</span>
 
+Template.Page.events({
+  <span class="pl-s"><span class="pl-pds">'</span><span class="pl-en">click .page</span><span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">event</span>, <span class="pl-smi">data</span>, <span class="pl-smi">props</span>) {
+    <span class="pl-en">console</span><span class="pl-c1">.log</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello world from <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-v">this</span>.displayName); <span class="pl-c">// Prints "Hello world from Page".</span>
+  }
+})</pre>
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
 
@@ -180,6 +190,7 @@ Page = React.createClass({displayName: "Page",
 
 </code></pre></td></tr></tbody></table>
 
+<!--
 ```jsx
 <template name="Page">
   <div class="page">
@@ -193,19 +204,17 @@ Template.Page.events({
   }
 })
 ```
+-->
 
 Will build into:
 
 ```jsx
 Page = React.createClass({displayName: "Page",
-  events: {
-    'click .page': function(event, data, props) {
-      console.log('Hello world from ' + this.displayName); // Prints "Hello world from Page".
-    }
+  clickEvent: function() {
+    console.log('Hello world from ' + this.displayName); // Prints "Hello world from Page".
   },
   render: function() {
-    let component = this;
-    return (<div className="page" onClick={this.events['click .page'].bind(component, event, this, this.props)}>
+    return (<div className="page" onClick={this.clickEvent}>
       Hello world
     </div>);
   }
