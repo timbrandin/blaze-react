@@ -180,7 +180,7 @@ Template.Page.events({
   <span class="pl-s"><span class="pl-pds">'</span><span class="pl-en">click .page</span><span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
     <span class="pl-en">console</span><span class="pl-c1">.log</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello world<span class="pl-pds">'</span></span>);
   }
-})</pre>
+});</pre>
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
 
@@ -209,7 +209,7 @@ Template.Page.events({
   'click .page': function() {
     console.log('Hello world');
   }
-})
+});
 ```
 
 ```jsx
