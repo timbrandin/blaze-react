@@ -229,18 +229,18 @@ Page = React.createClass({displayName: "Page",
 ## Features
 
 - [x] .html.jsx templates
-- [x] Blaze **helpers**
-- [x] Blaze **onCreated**
-- [x] Blaze **events**
-- [x] Blaze **onRendered**
-- [ ] Blaze **onDestroyed**
-- [ ] Blaze **autorun**
-- [ ] Blaze **subscribe**
-- [ ] Spacebars **{{helper}}**
-- [ ] Spacebars **{{#if}}{{/if}}**
-- [ ] Spacebars **{{#if}}{{else}}{{/if}}**
-- [ ] Spacebars **{{#each}}{{/each}}**
-- [ ] Spacebars **{{#with}}{{/with}}**
-- [ ] Spacebars **{{#with}}{{else}}{{/with}}**
-- [ ] Spacebars **{{#unless}}{{/unless}}**
-- [ ] Spacebars **{{#unless}}{{else}}{{/unless}}**
+- [x] Blaze helpers
+- [x] Blaze onCreated
+- [x] Blaze events
+- [x] Blaze onRendered
+- [ ] Blaze onDestroyed
+- [ ] Blaze autorun
+- [ ] Blaze subscribe
+- [ ] Spacebars {{helper}}
+- [ ] Spacebars {{#if}}{{/if}}
+- [ ] Spacebars {{#if}}{{else}}{{/if}}
+- [ ] Spacebars {{#each}}{{/each}}
+- [ ] Spacebars {{#with}}{{/with}}
+- [ ] Spacebars {{#with}}{{else}}{{/with}}
+- [ ] Spacebars {{#unless}}{{/unless}}
+- [ ] Spacebars {{#unless}}{{else}}{{/unless}}
