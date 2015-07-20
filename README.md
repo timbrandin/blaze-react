@@ -237,6 +237,6 @@ Page = React.createClass({displayName: "Page",
 - [x] .jsx **onCreated**
 - [x] .jsx **events**
 - [x] .jsx **onRendered**
-- [x] .jsx **onDestroyed**
-- [x] .jsx **autorun**
-- [x] .jsx **subscribe**
+- [ ] .jsx **onDestroyed**
+- [ ] .jsx **autorun**
+- [ ] .jsx **subscribe**
