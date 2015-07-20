@@ -98,12 +98,12 @@ Will build into:
 ```jsx
 Page = React.createClass({displayName: "Page",
   events: {
-    'click .page': function() {
-      console.log('Hello world');
+    'click .page': function(event, data, props) {
+      console.log('Hello world from ' + this.displayName); // Prints "Hello world from Page".
     }
   },
   render: function() {
-    return (<div className="page" onClick={this.events['click .page'].bind(null, this.props)}>
+    return (<div className="page" onClick={this.events['click .page'].bind(this, event, this.data, this.props)}>
       Hello world
     </div>);
   }
