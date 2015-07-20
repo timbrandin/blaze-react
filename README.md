@@ -186,7 +186,16 @@ Template.Page.events({
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
 
-
+<pre>Page <span class="pl-k">=</span> React.createClass({displayName<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
+  <span class="pl-en">clickEvent</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+    <span class="pl-en">console</span><span class="pl-c1">.log</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello world from <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-v">this</span>.displayName); <span class="pl-c">// Prints "Hello world from Page".</span>
+  },
+  <span class="pl-en">render</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+    <span class="pl-k">return</span> (<span class="pl-k">&lt;</span>div className<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span> onClick<span class="pl-k">=</span>{<span class="pl-v">this</span>.clickEvent}<span class="pl-k">&gt;</span>
+      Hello world
+    <span class="pl-k">&lt;</span>/div<span class="pl-k">&gt;</span>);
+  }
+});</pre>
 
 </code></pre></td></tr></tbody></table>
 
@@ -208,6 +217,7 @@ Template.Page.events({
 
 Will build into:
 
+<!--
 ```jsx
 Page = React.createClass({displayName: "Page",
   clickEvent: function() {
@@ -220,6 +230,7 @@ Page = React.createClass({displayName: "Page",
   }
 });
 ```
+-->
 
 ## Features
 
