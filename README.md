@@ -199,7 +199,7 @@ Template.Page.events({
 
 </code></pre></td></tr></tbody></table>
 
-<!--
+
 ```jsx
 <template name="Page">
   <div class="page">
@@ -208,18 +208,18 @@ Template.Page.events({
 </template>
 
 Template.Page.events({
-  'click .page': function(event, data, props) {
-    console.log('Hello world from ' + this.displayName); // Prints "Hello world from Page".
+  'click .page': function() {
+    console.log('Hello world');
   }
 })
 ```
--->
 
-<!--
+
+
 ```jsx
 Page = React.createClass({displayName: "Page",
   clickEvent: function() {
-    console.log('Hello world from ' + this.displayName); // Prints "Hello world from Page".
+    console.log('Hello world');
   },
   render: function() {
     return (<div className="page" onClick={this.clickEvent}>
