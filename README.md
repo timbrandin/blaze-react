@@ -71,7 +71,7 @@ Template.Page.helpers({
 // Same as onComponentDidMount or componentDidMount.
 Template.Page.onRendered(function() {
   setTimeout(() => {
-    this.name.set('With a Blaze API');
+    this.name.set('React: With a Blaze API');
   }, 2000);
 });
 ```
