@@ -168,7 +168,7 @@ Page = React.createClass({displayName: "Page",
 
 ### Component with click handler
 
-<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">Compiled React</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
+<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React comparison</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
 <pre><span class="pl-k">&lt;</span>template name<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
   <span class="pl-k">&lt;</span>div <span class="pl-k">class</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
