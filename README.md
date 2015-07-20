@@ -20,27 +20,27 @@ meteor add timbrandin:sideburns
 
 ### Simple example, create a component named Page.
 
-```jsx
-<template name="Page">
-  <div class="page">
+<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React (.jsx)</th></tr></thead><tbody>
+<tr><td valign="top">
+
+<pre lang="jsx"><code><span class="pl-k rich-diff-level-one">&lt;</span>template name<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
+  <span class="pl-k rich-diff-level-one">&lt;</span>div <span class="pl-k rich-diff-level-one">class</span><span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
     Hello world
-  </div>
-</template>
-```
+  <span class="pl-k rich-diff-level-one">&lt;</span>/div<span class="pl-k rich-diff-level-one">&gt;</span>
+<span class="pl-k rich-diff-level-one">&lt;</span>/template<span class="pl-k rich-diff-level-one">&gt;</code></span></pre>
 
-Will build into:
+</td><td valign="top">
 
-```jsx
-Page = React.createClass({displayName: "Page",
-  render: function() {
-    return (<div className="page">
+<pre lang="jsx" class="vicinity rich-diff-level-zero"><code>Page <span class="pl-k rich-diff-level-one">=</span> React.createClass({displayName<span class="pl-k rich-diff-level-one">:</span> <span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
+  <span class="pl-en rich-diff-level-one">render</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
+    <span class="pl-k rich-diff-level-one">return</span> (<span class="pl-k rich-diff-level-one">&lt;</span>div className<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
       Hello world
-    </div>);
+    <span class="pl-k rich-diff-level-one">&lt;</span>/div<span class="pl-k rich-diff-level-one">&gt;</span>);
   }
-});
-```
-
-> Notice! For this to work use ```.html.jsx``` instead of ```.jsx``` on your template files.
+});</code></pre>
+</td>
+</tr>
+</tbody></table>
 
 ### Advanced example, with helpers and onCreated
 
