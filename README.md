@@ -17,7 +17,7 @@ meteor add timbrandin:sideburns
 
 ## Getting started
 
-### Simple example
+### Simple component
 
 <table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React comparison</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
@@ -61,7 +61,7 @@ Page = React.createClass({displayName: "Page",
 ```
 -->
 
-### Advanced example
+### Component with reactivity
 
 <table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React comparison</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
@@ -166,7 +166,7 @@ Page = React.createClass({displayName: "Page",
 ```
 -->
 
-### Events example
+### Component with click event handler
 
 <table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">Compiled React</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
