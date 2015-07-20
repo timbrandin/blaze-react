@@ -54,6 +54,7 @@ meteor add reactive-var
 ```
 
 ```jsx
+// {{name}} is parsed into {this.data.name}.
 <template name="Page">
   <div class="page">
     Hello {{name}}
