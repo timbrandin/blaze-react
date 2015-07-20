@@ -17,7 +17,7 @@ meteor add timbrandin:sideburns
 
 ## Getting started
 
-### Simple example, create a component named Page.
+### Simple example, a component named Page.
 
 <table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React (.jsx)</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
