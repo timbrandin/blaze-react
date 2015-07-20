@@ -140,9 +140,7 @@ Template.Page.onRendered(function() {
   }, 2000);
 });
 ```
--->
 
-<!--
 ```jsx
 Page = React.createClass({displayName: "Page",
   mixins: [ReactMeteorData],
@@ -199,7 +197,7 @@ Template.Page.events({
 
 </code></pre></td></tr></tbody></table>
 
-
+<!--
 ```jsx
 <template name="Page">
   <div class="page">
@@ -213,8 +211,6 @@ Template.Page.events({
   }
 })
 ```
-
-
 
 ```jsx
 Page = React.createClass({displayName: "Page",
