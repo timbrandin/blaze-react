@@ -109,7 +109,8 @@ Page = React.createClass({displayName: "Page",
     }
   },
   render: function() {
-    return (<div className="page" onClick={this.events['click .page'].bind(this, event, this.data, this.props)}>
+    let component = this;
+    return (<div className="page" onClick={this.events['click .page'].bind(component, event, this, this.props)}>
       Hello world
     </div>);
   }
