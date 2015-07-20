@@ -1,5 +1,5 @@
 # Sideburns
-> **Sideburns** is a [Meteor](http://meteor.com) package which give you templates for React with the [Blaze API](https://www.meteor.com/blaze) (giving you **helpers**, **events**, **onRendered**, **onCreated** etc).
+> **Sideburns** is a [Meteor](http://meteor.com) package which give you templates for React in a familiar [Blaze API](https://www.meteor.com/blaze) (giving you **helpers**, **events**, **onRendered**, **onCreated** etc) making the transition to React easy.
 
 We've also fixed **indentation** and **class** (instead of className) for better readability of your component markup.
 
@@ -19,7 +19,7 @@ meteor add timbrandin:sideburns
 
 ### Simple example, a component named Page.
 
-<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">Compiled React</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
+<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React comparison</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
 <span class="pl-k rich-diff-level-one">&lt;</span>template name<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
   <span class="pl-k rich-diff-level-one">&lt;</span>div <span class="pl-k rich-diff-level-one">class</span><span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
@@ -63,7 +63,7 @@ Page = React.createClass({displayName: "Page",
 
 ### Advanced example, with helpers and onCreated
 
-<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">Compiled React</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
+<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React comparison</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
 <pre class="vicinity rich-diff-level-zero">
 <span class="pl-k rich-diff-level-one">&lt;</span>template name<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
@@ -89,6 +89,28 @@ Template.Page.onRendered(<span class="pl-k rich-diff-level-one">function</span>(
 });</pre>
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
+
+<pre class="rich-diff-level-zero">Page <span class="pl-k rich-diff-level-one">=</span> React.createClass({displayName<span class="pl-k rich-diff-level-one">:</span> <span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
+  mixins<span class="pl-k rich-diff-level-one">:</span> [ReactMeteorData],
+  <span class="pl-en rich-diff-level-one">getMeteorData</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
+    <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span> <span class="pl-k rich-diff-level-one">=</span> <span class="pl-k rich-diff-level-one">new</span> <span class="pl-en rich-diff-level-one">ReactiveVar</span>(<span class="pl-s rich-diff-level-one"><span class="pl-pds">'</span>React<span class="pl-pds">'</span></span>);
+    <span class="pl-k rich-diff-level-one">return</span> {
+      <span class="pl-en rich-diff-level-one">name</span>() {
+        <span class="pl-k rich-diff-level-one">return</span> <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span>;
+      }
+    }
+  },
+  <span class="pl-en rich-diff-level-one">componentDidMount</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
+    <span class="pl-c1 rich-diff-level-one">setTimeout</span>(()<span class="pl-k rich-diff-level-one"> =&gt;</span> {
+      <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span>.set(<span class="pl-s rich-diff-level-one"><span class="pl-pds">'</span>React: With a Blaze API<span class="pl-pds">'</span></span>);
+    }, <span class="pl-c1 rich-diff-level-one">2000</span>);
+  },
+  <span class="pl-en rich-diff-level-one">render</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
+    <span class="pl-k rich-diff-level-one">return</span> (<span class="pl-k rich-diff-level-one">&lt;</span>div className<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
+      Hello {<span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">data</span>.<span class="pl-c1 rich-diff-level-one">name</span>}
+    <span class="pl-k rich-diff-level-one">&lt;</span>/div<span class="pl-k rich-diff-level-one">&gt;</span>);
+  }
+});</pre>
 
 </code></pre></td></tr></tbody></table>
 
@@ -120,7 +142,43 @@ Template.Page.onRendered(function() {
 ```
 -->
 
+<!--
+```jsx
+Page = React.createClass({displayName: "Page",
+  mixins: [ReactMeteorData],
+  getMeteorData: function() {
+    this.name = new ReactiveVar('React');
+    return {
+      name() {
+        return this.name;
+      }
+    }
+  },
+  componentDidMount: function() {
+    setTimeout(() => {
+      this.name.set('React: With a Blaze API');
+    }, 2000);
+  },
+  render: function() {
+    return (<div className="page">
+      Hello {this.data.name}
+    </div>);
+  }
+});
+```
+-->
+
 ### Events example, adding onClick
+
+<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">Compiled React</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
+
+
+
+</code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
+
+
+
+</code></pre></td></tr></tbody></table>
 
 ```jsx
 <template name="Page">
