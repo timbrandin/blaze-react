@@ -1,4 +1,4 @@
-# JSX templating
+# Sideburns (.jsx ♡ pure HTML ♡ Handlebars)
 
 > JSX templating is a [Meteor](http://meteor.com) package which builds upon [@dgreensp](https://github.com/dgreensp)'s [JSX build plugin](https://github.com/meteor/react-packages/blob/master/packages/jsx) and [@stubailo](https://github.com/stubailo)'s [react-packages](https://github.com/meteor/react-packages) but goes a few step further and implements Blaze's **helpers** and **onCreated** to showcase why that API makes it so much easier/[***AWESOME™***](https://github.com/meteor/react-packages/issues/15#issuecomment-116911066). And also, as I'm a markup nazi, I like **indentation** and **class** (instead of className).
 
@@ -120,10 +120,10 @@ Page = React.createClass({displayName: "Page",
 ## Features
 
 - [x] .jsx templates
-- [x] .jsx template **helpers**
-- [x] .jsx template **onCreated**
-- [x] .jsx template **events**
-- [x] .jsx template **onRendered**
-- [x] .jsx template **onDestroyed**
-- [x] .jsx template **autorun**
-- [x] .jsx template **subscribe**
+- [x] .jsx **helpers**
+- [x] .jsx **onCreated**
+- [x] .jsx **events**
+- [x] .jsx **onRendered**
+- [x] .jsx **onDestroyed**
+- [x] .jsx **autorun**
+- [x] .jsx **subscribe**
