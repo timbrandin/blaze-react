@@ -46,6 +46,8 @@ Page = React.createClass({displayName: "Page",
 
 ### Advanced example, with helpers and onCreated
 
+> Notice! "this" is always a reference to the component.
+
 This example requires you've added ReactiveVar:
 ```bash
 meteor add reactive-var
@@ -80,6 +82,8 @@ Template.Page.onRendered(function() {
 
 ### Events example, adding onClick
 
+> Notice! "this" is always a reference to the component, which is different from Blaze.
+
 ```jsx
 <template name="Page">
   <div class="page">
@@ -88,8 +92,8 @@ Template.Page.onRendered(function() {
 </template>
 
 Template.Page.events({
-  'click .page': function() {
-    console.log('Hello world');
+  'click .page': function(event, data, props) {
+    console.log('Hello world from ' + this.displayName); // Prints "Hello world from Page".
   }
 })
 ```
