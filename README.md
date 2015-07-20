@@ -68,7 +68,8 @@ Template.Page.helpers({
   }
 });
 
-Template.Page.onComponentDidMount(function() {
+// Same as onComponentDidMount or componentDidMount.
+Template.Page.onRendered(function() {
   setTimeout(() => {
     this.name.set('With a Blaze API');
   }, 2000);
