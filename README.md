@@ -19,7 +19,7 @@ meteor add timbrandin:sideburns
 
 ### Simple example, a component named Page.
 
-<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React (.jsx)</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
+<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">Compiled React</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
 <span class="pl-k rich-diff-level-one">&lt;</span>template name<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
   <span class="pl-k rich-diff-level-one">&lt;</span>div <span class="pl-k rich-diff-level-one">class</span><span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
@@ -63,7 +63,7 @@ Page = React.createClass({displayName: "Page",
 
 ### Advanced example, with helpers and onCreated
 
-<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React (.jsx)</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
+<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">Compiled React</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
 
 <pre class="vicinity rich-diff-level-zero">
 <span class="pl-k rich-diff-level-one">&lt;</span>template name<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
