@@ -2,16 +2,14 @@
 
 Meteor + JSX + templates + Handlebars = ♡ + pure HTML
 
-> JSX templating is a [Meteor](http://meteor.com) package which builds upon [@dgreensp](https://github.com/dgreensp)'s [JSX build plugin](https://github.com/meteor/react-packages/blob/master/packages/jsx) and [@stubailo](https://github.com/stubailo)'s [react-packages](https://github.com/meteor/react-packages) but goes a few step further and implements Blaze's **helpers** and **onCreated** to showcase why that API makes it so much easier/[***AWESOME™***](https://github.com/meteor/react-packages/issues/15#issuecomment-116911066). And also, as I'm a markup nazi, I like **indentation** and **class** (instead of className).
+> Sideburns is a [Meteor](http://meteor.com) package which builds upon [@dgreensp](https://github.com/dgreensp)'s [JSX build plugin](https://github.com/meteor/react-packages/blob/master/packages/jsx) and [@stubailo](https://github.com/stubailo)'s [react-packages](https://github.com/meteor/react-packages) but goes a few step further and implements Blaze's API with **helpers**, **events**, **onRendered**, **onCreated** and more to showcase an [***AWESOME™***](https://github.com/meteor/react-packages/issues/15#issuecomment-116911066) way to build React + Meteor apps. 
+
+By doing this we can also gain **indentation** and **class** (instead of className) for better readability of your markup.
 
 ## Installation
 
-JSX templating is on [atmosphere](https://atmospherejs.com/timbrandin/jsx-templating).
-
-To install on Meteor 0.9 or later:
-
 ```bash
-meteor add timbrandin:jsx-templating
+meteor add timbrandin:sideburns
 ```
 
 ## Demo
