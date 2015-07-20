@@ -12,7 +12,7 @@ Package.describe({
 
 Package.registerBuildPlugin({
   name: 'transpileJSXHTML',
-  use: ['babel-compiler@5.4.7'],
+  use: ['underscore', 'babel-compiler@5.4.7'],
   sources: [
     'jsx-templating-plugin.js'
   ],
