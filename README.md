@@ -236,7 +236,7 @@ Page = React.createClass({displayName: "Page",
 - [ ] Blaze onDestroyed
 - [ ] Blaze autorun
 - [ ] Blaze subscribe
-- [ ] Spacebars {{helper}}
+- [x] Spacebars {{helper}}
 - [ ] Spacebars {{#if}}{{/if}}
 - [ ] Spacebars {{#if}}{{else}}{{/if}}
 - [ ] Spacebars {{#each}}{{/each}}
