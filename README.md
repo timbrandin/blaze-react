@@ -1,5 +1,5 @@
 # Sideburns
-> **Sideburns** is a [Meteor](http://meteor.com) package which give you templates for React with Blaze's API (**helpers**, **events**, **onRendered**, **onCreated** and more).
+> **Sideburns** is a [Meteor](http://meteor.com) package which give you templates for React with the [Blaze API](https://www.meteor.com/blaze) (giving you **helpers**, **events**, **onRendered**, **onCreated** etc).
 
 We've also fixed **indentation** and **class** (instead of className) for better readability of your component markup.
 
