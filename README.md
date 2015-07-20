@@ -215,8 +215,6 @@ Template.Page.events({
 ```
 -->
 
-Will build into:
-
 <!--
 ```jsx
 Page = React.createClass({displayName: "Page",
