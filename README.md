@@ -14,8 +14,9 @@ meteor add timbrandin:jsx-templating
 
 ## Demo
 
-* https://github.com/timbrandin/meteor-iosmorphic-react-templating
-* http://jsx-templating.meteor.com/
+* http://jsx-templating.meteor.com/ (https://github.com/timbrandin/meteor-iosmorphic-react-templating)
+* http://spacetalkapp.com (https://github.com/SpaceTalk/SpaceTalk-Homepage)
+* http://timbrandin.com (https://github.com/timbrandin/resumeteor)
 
 ## Getting started
 
