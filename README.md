@@ -71,7 +71,7 @@ Template.Page.helpers({
   }
 });
 
-// Same as onComponentDidMount or componentDidMount.
+// Same as onComponentDidMount.
 Template.Page.onRendered(function() {
   setTimeout(() => {
     this.name.set('React: With a Blaze API');
