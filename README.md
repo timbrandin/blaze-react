@@ -274,7 +274,7 @@ Page = React.createClass({displayName: "Page",
       people() {
         return People.find();
       },
-    
+
       isSelected: (context) => {
         return this.selected.get() == context._id ? 'active' : '';
       }
@@ -286,7 +286,7 @@ Page = React.createClass({displayName: "Page",
   render: function() {
     return (<ul>{
       this.data.people.map((person, index) => {
-        return (<li key={index} onClick={this.clickHandler.bind(this, person)} 
+        return (<li key={index} onClick={this.clickHandler.bind(this, person)}
           className={'item ' + this.data.isSelected.call(this, person)}>{person.name}</li>);
       });
     }</ul>);
@@ -317,9 +317,12 @@ Page = React.createClass({displayName: "Page",
 - [x] Spacebars {{{helper}}} (raw HTML)
 - [x] Spacebars "{{helper}}" (SafeString – In Attribute Values)
 - [x] Spacebars ={{helper}} (SafeString – Dynamic Attribute Value)
-- [ ] Spacebars {{#if}}
+- [x] Spacebars {{#if}}
+- [x] Spacebars {{else}} {{/if}}
 - [ ] Spacebars {{#each}}
 - [x] Spacebars {{#each in}}
+- [x] Spacebars {{else}} {{/each}}
 - [ ] Spacebars {{#with}}
-- [ ] Spacebars {{#with}}
-- [ ] Spacebars {{#unless}}
+- [ ] Spacebars {{else}} {{#with}}
+- [x] Spacebars {{#unless}}
+- [x] Spacebars {{else}} {{/unless}}

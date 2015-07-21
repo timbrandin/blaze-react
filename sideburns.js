@@ -68,7 +68,7 @@ var handler = function (compileStep) {
 
     /* INJECT EVENTS */
     if (eventMaps[className]) {
-      markup = markup.replace(/<([^\>]+)\/>/g, '<$1></$1>');
+      markup = markup.replace(/<((?!br)[^\>]+)\/>/ig, '<$1></$1>');
       for(var key in _.omit(eventMaps[className], 'string')) {
         var selectors = key.split(',');
         for(var j=0; j < selectors.length; j++) {
@@ -92,29 +92,51 @@ var handler = function (compileStep) {
     /* START SPACEBARS */
 
     // Add return and key={index} inside {{#each}}.
-    markup = markup.replace(/({{#each [^}]+}}[^<]*)(<\w+)/g, '$1let context=arguments[0];return ($2 key={index}');
+    markup = markup.replace(/({{#each\s+[^}]+}}[^<]*)(<\w+)/g, '$1let context=arguments[0];return ($2 key={index}');
     // {{#each}} in
-    markup = markup.replace(/{{#each ([^\s]+) in ([^}]+)}}/g, "{(typeof $2 != 'undefined' ? $2 : (this.data && this.data.$2 ? this.data.$2 : [])).map(function($1, index){");
+    markup = markup.replace(/{{#each\s+([^\s]+)\s+in\s+([^}]+)\s*}}/g, "{(this.data && this.data.$2 ? this.data.$2 : []).map(function($1, index){");
     // {{/each}}
     markup = markup.replace(/{{\/each}}/g, ");})}");
 
+    // ^{{#if}}
+    markup = markup.replace(/^\W*{{#if\s+(\w+)\s*}}/g, "this.data && this.data.$1?(");
+    // {{/if}}$
+    markup = markup.replace(/{{\/if}}\W*$/g, "):''");
+    // {{#if}}
+    markup = markup.replace(/{{#if\s+(\w+)\s*}}/g, "{this.data && this.data.$1?(");
+    // {{else}} {{/if}}
+    markup = markup.replace(/(?:{{else}}(?![\w\W]*{{else}}))([\w\W]*){{\/if}}/g, "):($1)}");
+    // {{/if}}
+    markup = markup.replace(/{{\/if}}/g, "):''}");
+
+    // ^{{#if}}
+    markup = markup.replace(/^\W*{{#unless\s+(\w+)\s*}}/g, "this.data && this.data.$1?(");
+    // {{/if}}$
+    markup = markup.replace(/{{\/unless}}\W*$/g, "):''");
+    // {{#unless}}
+    markup = markup.replace(/{{#unless\s+(\w+)\s*}}/g, "{this.data && !this.data.$1?(");
+    // {{else}} {{/unless}}
+    markup = markup.replace(/(?:{{else}}(?![\w\W]*{{else}}))([\w\W]*){{\/unless}}/g, "):($1)}");
+    // {{/unless}}
+    markup = markup.replace(/{{\/unless}}/g, "):''}");
+
     // {{helper}} raw HTML
-    markup = markup.replace(/{{{([^}]*)}}}/g, "{typeof $1 != 'undefined' ? new Sideburns.SafeString($1) : (this.data && this.data.$1 ? this.data.$1 : '')}");
+    markup = markup.replace(/{{{([^}]*)}}}/g, "{this.data && this.data.$1 ? this.data.$1 : ''}");
 
     // {{helper}} SafeString – Dynamic Attribute (class)
-    markup = markup.replace(/\sclass={{([^}]*)}}/g, " className={typeof $1 != 'undefined' ? new Sideburns.SafeString($1) : (this.data && this.data.$1? new Sideburns.classNames(this.data.$1) : '')}");
+    markup = markup.replace(/\sclass={{([^}]*)}}/g, " className={this.data && this.data.$1? new Sideburns.classNames(this.data.$1) : ''}");
 
     // {{helper}} SafeString – Dynamic Attribute (other)
-    markup = markup.replace(/={{([^}]*)}}/g, "={typeof $1 != 'undefined' ? new Sideburns.SafeString($1) : (this.data && this.data.$1? new Sideburns.SafeString(this.data.$1) : '')}");
+    markup = markup.replace(/={{([^}]*)}}/g, "={this.data && this.data.$1? new Sideburns.SafeString(this.data.$1) : ''}");
 
     // {{helper}} SafeString – In Attribute Values (class)
-    markup = markup.replace(/\sclass="([^\"{]*){{([^}]*)}}([^\"{]*)\"/g, " className={typeof $2 != 'undefined' ? new Sideburns.SafeString($2) : (this.data && this.data.$2? '$1' + new Sideburns.classNames(this.data.$2) + '$3' : '')}");
+    markup = markup.replace(/\sclass="([^\"{]*){{([^}]*)}}([^\"{]*)\"/g, " className={this.data && this.data.$2? '$1' + new Sideburns.classNames(this.data.$2) + '$3' : ''}");
 
     // {{helper}} SafeString – In Attribute Values (other)
-    markup = markup.replace(/="([^\"{]*){{([^}]*)}}([^\"{]*)\"/g, "={typeof $2 != 'undefined' ? new Sideburns.SafeString($2) : (this.data && this.data.$2? '$1' + new Sideburns.classNames(this.data.$2) + '$3' : '')}");
+    markup = markup.replace(/="([^\"{]*){{([^}]*)}}([^\"{]*)\"/g, "={this.data && this.data.$2? '$1' + new Sideburns.classNames(this.data.$2) + '$3' : ''}");
 
     // {{helper}} SafeString
-    markup = markup.replace(/{{([^}]*)}}/g, "{typeof $1 != 'undefined' ? new Sideburns.SafeString($1) : (this.data && this.data.$1 ? new Sideburns.SafeString(this.data.$1) : '')}");
+    markup = markup.replace(/{{([^}]*)}}/g, "{this.data && this.data.$1 ? new Sideburns.SafeString(this.data.$1) : ''}");
 
     /* END SPACEBARS */
 
@@ -154,10 +176,6 @@ var handler = function (compileStep) {
     extras += (code[1] || '');
   }
 
-  // if (eventMaps[className]) {
-  //   console.log(jsx + extras);
-  // }
-
   var outputFile = compileStep.inputPath + ".js";
 
   try {
@@ -177,6 +195,14 @@ var handler = function (compileStep) {
         column: e.loc.column
       });
 
+      var lines = (jsx + extras).split(/\n/g);
+      _.each(lines, function(line, i) {
+        console.log((i+1) + '  ', line);
+      });
+
+      console.log('\n\n\n');
+      console.log(compileStep.pathForSourceMap);
+      console.log('=====================');
       console.log(jsx + extras);
 
       return;
