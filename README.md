@@ -321,7 +321,7 @@ Page = React.createClass({displayName: "Page",
 - [x] Spacebars {{else}} {{/if}}
 - [ ] Spacebars {{#each}}
 - [x] Spacebars {{#each in}}
-- [x] Spacebars {{else}} {{/each}}
+- [ ] Spacebars {{else}} {{/each}}
 - [ ] Spacebars {{#with}}
 - [ ] Spacebars {{else}} {{#with}}
 - [x] Spacebars {{#unless}}
