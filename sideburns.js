@@ -76,11 +76,13 @@ var handler = function (compileStep) {
           var event = selector[0];
           var select = selector[1];
           var $ = cheerio.load(markup);
-          if (ReactEvents[event]) {
-            $(select).removeAttr(ReactEvents[event]);
-            $(select).attr(ReactEvents[event], "{__component.events['" + key + "'].bind(__component, typeof context != 'undefined' ? context : (this.data ? this.data : this))}");
-            markup = $.html();
-          }
+          // Get the react event name or use custom name.
+          var eventName = ReactEvents[event] ? ReactEvents[event] : event;
+          // Remove duplicate listeners.
+          $(select).removeAttr(eventName);
+          // Append new listener.
+          $(select).attr(eventName, "{__component.events['" + key + "'].bind(__component, typeof context != 'undefined' ? context : (this.data ? this.data : this))}");
+          markup = $.html();
         }
       }
       // Cheerio adds qoutes on all attributes, React don't want that so we have to remove those quotes.
