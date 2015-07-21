@@ -316,7 +316,7 @@ Page = React.createClass({displayName: "Page",
 - [x] Spacebars ={{helper}} (SafeString – Dynamic Attribute Value)
 - [ ] Spacebars {{#if}}
 - [ ] Spacebars {{#each}}
-- [x] Spacebars {{#each}} in
+- [x] Spacebars {{#each in}}
 - [ ] Spacebars {{#with}}
 - [ ] Spacebars {{#with}}
 - [ ] Spacebars {{#unless}}
