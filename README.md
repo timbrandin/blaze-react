@@ -277,7 +277,7 @@ Page = React.createClass({displayName: "Page",
       }
     }
   },
-  clickEvent: function(context, event) {
+  clickHandler: function(context, event) {
     this.selected.set(context._id);
   },
   render: function() {
