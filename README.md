@@ -1,7 +1,10 @@
 # Sideburns
 > **Sideburns** is a [Meteor](http://meteor.com) package which give you templates for React in a familiar [Blaze API](https://www.meteor.com/blaze) (giving you **helpers**, **events**, **onRendered**, **onCreated** etc) with a subset of [Spacebars](https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md) (aka Meteor flavored Handlebars).
 
-We've also fixed **indentation** and **class** (instead of className) for better readability of your component markup.
+**Why React?** – Well it gives us faster pageloads, SEO without Spiderable, accessibility for users without JavaScript and general improvements in page rendering speed.
+
+**Why a Blaze/Spacebars API?** – Well it's way easier to learn and get started with, can't argue against that right (see examples below)?
+
 
 ## Installation
 
