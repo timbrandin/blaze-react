@@ -1,5 +1,10 @@
 # Change Log
 
+### v0.2.1
+
+* Added possibility for custom events in event-map.
+* Fixed a bug with component inclusions.
+
 ### v0.2.0
 
 > Project renamed to **Sideburns** (timbrandin:sideburns), formerly known as **JSX Templates** (timbrandin:jsx-templates).
