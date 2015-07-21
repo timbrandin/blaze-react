@@ -1,5 +1,10 @@
 # Change Log
 
+### v0.2.3
+
+* Improved variable checking for helpers.
+* Improved logging output on failure.
+
 ### v0.2.2
 
 * Implemented {{#if}}, {{#if}} {{else}}, {{#unless}} and {{#unless}} {{else}}
