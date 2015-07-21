@@ -226,10 +226,83 @@ Page = React.createClass({displayName: "Page",
 ```
 -->
 
+### Iterating through a list with click handlers
+
+#### Sideburns (.html.jsx)
+
+```jsx
+<template name="Page">
+  <ul>
+    {{#each person in people}}
+    <li class="item {{isSelected}}">{{person.name}}</li>
+    {{/each}}
+  </ul>
+</template>
+
+Template.Page.onCreated(function() {
+  this.selected = new ReactiveVar(false);
+});
+
+Template.Page.helpers({
+  people() {
+    return People.find();
+  },
+
+  isSelected: function(context) {
+    return this.selected.get() == context._id ? 'active' : '';
+  }
+});
+
+Template.Page.events({
+  'click ul li': function(context, event) {
+    this.selected.set(context._id);
+  }
+});
+```
+
+#### React comparison
+
+```jsx
+Page = React.createClass({displayName: "Page",
+  mixins: [ReactMeteorData],
+  getMeteorData: function() {
+    this.selected = new ReactiveVar(false);
+    return {
+      people() {
+        return People.find();
+      },
+    
+      isSelected: (context) => {
+        return this.selected.get() == context._id ? 'active' : '';
+      }
+    }
+  },
+  clickEvent: function(context, event) {
+    this.selected.set(context._id);
+  },
+  render: function() {
+    return (<ul>{
+      this.data.people.map((person, index) => {
+        return (<li key={index} onClick={this.clickHandler.bind(this, person)} className={'item ' + this.data.isSelected.call(this, person)}>{person.name}</li>);
+      });
+    }</ul>);
+  }
+});
+```
+
+<!-- Table template for comparisons.
+<table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React comparison</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
+
+</code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
+
+</code></pre></td></tr></tbody></table>
+-->
+
 ## Features
 
 - [x] .html.jsx templates
 - [x] Blaze helpers
+- [ ] Blaze helper context
 - [x] Blaze onCreated
 - [x] Blaze events
 - [ ] Blaze onRendered
