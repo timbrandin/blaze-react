@@ -68,7 +68,7 @@ var handler = function (compileStep) {
 
     /* INJECT EVENTS */
     if (eventMaps[className]) {
-      markup = markup.replace(/\/>/g, '>');
+      markup = markup.replace(/<([^\>]+)\/>/g, '<$1></$1>');
       for(var key in _.omit(eventMaps[className], 'string')) {
         var selectors = key.split(',');
         for(var j=0; j < selectors.length; j++) {
