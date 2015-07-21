@@ -1,5 +1,11 @@
 # Change Log
 
+### v0.2.2
+
+* Implemented {{#if}}, {{#if}} {{else}}, {{#unless}} and {{#unless}} {{else}}
+* Fixed a bug with double linebreaks
+* Improved logging on error with line numbers.
+
 ### v0.2.1
 
 * Added possibility for custom events in event-map.
