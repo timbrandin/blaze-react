@@ -13,7 +13,7 @@ Package.describe({
 Package.registerBuildPlugin({
   name: 'transpileJSXHTML',
   use: [
-    'underscore',
+    'underscore@1.0.3',
     'babel-compiler@5.4.7',
     'cosmos:browserify@0.4.0',
   ],
