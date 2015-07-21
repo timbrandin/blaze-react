@@ -12,3 +12,22 @@ Sideburns.classNames = function(obj) {
 Sideburns.classNames.prototype.toString = Sideburns.classNames.prototype.toHTML = function() {
   return '' + new Sideburns.SafeString(Sideburns._classNames(this.obj));
 };
+
+Sideburns.check = function(context, string) {
+  var tests = string.split('.');
+  if (!context) {
+    return false;
+  }
+  var obj = context.data;
+  var str = 'this.data';
+  _.each(tests, function(test) {
+    if (!obj) {
+      return false;
+    }
+    obj = obj[test];
+    if (!obj || !_.has(obj, string)) {
+      return false;
+    }
+  });
+  return obj;
+}

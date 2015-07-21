@@ -94,49 +94,49 @@ var handler = function (compileStep) {
     // Add return and key={index} inside {{#each}}.
     markup = markup.replace(/({{#each\s+[^}]+}}[^<]*)(<\w+)/g, '$1let context=arguments[0];return ($2 key={index}');
     // {{#each}} in
-    markup = markup.replace(/{{#each\s+([^\s]+)\s+in\s+([^}]+)\s*}}/g, "{(this.data && this.data.$2 ? this.data.$2 : []).map(function($1, index){");
+    markup = markup.replace(/{{#each\s+([^\s]+)\s+in\s+([^}]+)\s*}}/g, "{(Sideburns.check(this, '$2')? this.data.$2 : []).map(function($1, index){");
     // {{/each}}
     markup = markup.replace(/{{\/each}}/g, ");})}");
 
     // ^{{#if}}
-    markup = markup.replace(/^\W*{{#if\s+(\w+)\s*}}/g, "this.data && this.data.$1?(");
+    markup = markup.replace(/^\W*{{#if\s+(\w+)\s*}}/g, "<span>{Sideburns.check(this, '$1')?(");
     // {{/if}}$
-    markup = markup.replace(/{{\/if}}\W*$/g, "):''");
+    markup = markup.replace(/{{\/if}}\W*$/g, "):''}</span>");
     // {{#if}}
-    markup = markup.replace(/{{#if\s+(\w+)\s*}}/g, "{this.data && this.data.$1?(");
+    markup = markup.replace(/{{#if\s+(\w+)\s*}}/g, "{Sideburns.check(this, '$1')?(");
     // {{else}} {{/if}}
     markup = markup.replace(/(?:{{else}}(?![\w\W]*{{else}}))([\w\W]*){{\/if}}/g, "):($1)}");
     // {{/if}}
     markup = markup.replace(/{{\/if}}/g, "):''}");
 
-    // ^{{#if}}
-    markup = markup.replace(/^\W*{{#unless\s+(\w+)\s*}}/g, "this.data && this.data.$1?(");
-    // {{/if}}$
-    markup = markup.replace(/{{\/unless}}\W*$/g, "):''");
+    // ^{{#unless}}
+    markup = markup.replace(/^\W*{{#unless\s+(\w+)\s*}}/g, "<span>{!Sideburns.check(this, '$1')?(");
+    // {{/unless}}$
+    markup = markup.replace(/{{\/unless}}\W*$/g, "):''}</span>");
     // {{#unless}}
-    markup = markup.replace(/{{#unless\s+(\w+)\s*}}/g, "{this.data && !this.data.$1?(");
+    markup = markup.replace(/{{#unless\s+(\w+)\s*}}/g, "{!Sideburns.check(this, '$1')?(");
     // {{else}} {{/unless}}
     markup = markup.replace(/(?:{{else}}(?![\w\W]*{{else}}))([\w\W]*){{\/unless}}/g, "):($1)}");
     // {{/unless}}
     markup = markup.replace(/{{\/unless}}/g, "):''}");
 
     // {{helper}} raw HTML
-    markup = markup.replace(/{{{([^}]*)}}}/g, "{this.data && this.data.$1 ? this.data.$1 : ''}");
+    markup = markup.replace(/{{{([^}]*)}}}/g, "{Sideburns.check(this, '$1')? this.data.$1 : ''}");
 
     // {{helper}} SafeString – Dynamic Attribute (class)
-    markup = markup.replace(/\sclass={{([^}]*)}}/g, " className={this.data && this.data.$1? new Sideburns.classNames(this.data.$1) : ''}");
+    markup = markup.replace(/\sclass={{([^}]*)}}/g, " className={Sideburns.check(this, '$1')? new Sideburns.classNames(this.data.$1) : ''}");
 
     // {{helper}} SafeString – Dynamic Attribute (other)
-    markup = markup.replace(/={{([^}]*)}}/g, "={this.data && this.data.$1? new Sideburns.SafeString(this.data.$1) : ''}");
+    markup = markup.replace(/={{([^}]*)}}/g, "={Sideburns.check(this, '$1')? new Sideburns.SafeString(this.data.$1) : ''}");
 
     // {{helper}} SafeString – In Attribute Values (class)
-    markup = markup.replace(/\sclass="([^\"{]*){{([^}]*)}}([^\"{]*)\"/g, " className={this.data && this.data.$2? '$1' + new Sideburns.classNames(this.data.$2) + '$3' : ''}");
+    markup = markup.replace(/\sclass="([^\"{]*){{([^}]*)}}([^\"{]*)\"/g, " className={Sideburns.check(this, '$2')? '$1' + new Sideburns.classNames(this.data.$2) + '$3' : ''}");
 
     // {{helper}} SafeString – In Attribute Values (other)
-    markup = markup.replace(/="([^\"{]*){{([^}]*)}}([^\"{]*)\"/g, "={this.data && this.data.$2? '$1' + new Sideburns.classNames(this.data.$2) + '$3' : ''}");
+    markup = markup.replace(/="([^\"{]*){{([^}]*)}}([^\"{]*)\"/g, "={Sideburns.check(this, '$2')? '$1' + new Sideburns.classNames(this.data.$2) + '$3' : ''}");
 
     // {{helper}} SafeString
-    markup = markup.replace(/{{([^}]*)}}/g, "{this.data && this.data.$1 ? new Sideburns.SafeString(this.data.$1) : ''}");
+    markup = markup.replace(/{{([^}]*)}}/g, "{Sideburns.check(this, '$1')? new Sideburns.SafeString(this.data.$1) : ''}");
 
     /* END SPACEBARS */
 
@@ -195,15 +195,13 @@ var handler = function (compileStep) {
         column: e.loc.column
       });
 
+      console.log('\n\n\n');
+      console.log(compileStep.pathForSourceMap);
+      console.log('=====================');
       var lines = (jsx + extras).split(/\n/g);
       _.each(lines, function(line, i) {
         console.log((i+1) + '  ', line);
       });
-
-      console.log('\n\n\n');
-      console.log(compileStep.pathForSourceMap);
-      console.log('=====================');
-      console.log(jsx + extras);
 
       return;
     } else {
