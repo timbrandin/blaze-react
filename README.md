@@ -137,11 +137,12 @@ Template.Page.onRendered(function() {
   }, 2000);
 });
 ```
+-->
 
 ```jsx
 Page = React.createClass({
   getIntialState: function() {
-    name: 'React'
+    return {name: 'React'};
   },
   componentDidMount: function() {
     setTimeout(() => {
