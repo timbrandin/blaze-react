@@ -275,7 +275,7 @@ Page = React.createClass({
   render() {
     return (<ul>{
       this.data.people.map((person, index) => {
-        return (<li key={index} onClick={this.clickHandler(person)}
+        return (<li key={index} onClick={this.clickHandler.bind(this, person)}
           className={'item ' + this.isSelected(person)}>{person.name}</li>);
       });
     }</ul>);
