@@ -95,7 +95,7 @@ Template.Page.onRendered(<span class="pl-k rich-diff-level-one">function</span>(
 
 <pre>Page <span class="pl-k">=</span> React.createClass({
   <span class="pl-en">getIntialState</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
-    name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>React<span class="pl-pds">'</span></span>
+    <span class="pl-k">return</span> {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>React<span class="pl-pds">'</span></span>};
   },
   <span class="pl-en">componentDidMount</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
     <span class="pl-c1">setTimeout</span>(()<span class="pl-k"> =&gt;</span> {
@@ -137,7 +137,6 @@ Template.Page.onRendered(function() {
   }, 2000);
 });
 ```
--->
 
 ```jsx
 Page = React.createClass({
