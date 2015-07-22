@@ -169,6 +169,24 @@ Page = React.createClass({displayName: "Page",
 ```
 -->
 
+```jsx
+Page = React.createClass({displayName: "Page",
+  getIntialState: function() {
+    name: 'React'
+  },
+  componentDidMount: function() {
+    setTimeout(() => {
+      this.setState({name: 'React: With a Blaze API'});
+    }, 2000);
+  },
+  render: function() {
+    return (<div className="page">
+      Hello {this.state.name}
+    </div>);
+  }
+});
+```
+
 ### Component with click handler
 
 <table width="100%"><thead><tr><th width="50%">Sideburns (.html.jsx)</th><th width="50%">React comparison</th></tr></thead><tbody><tr><td valign="top"><pre lang="jsx"><code>
@@ -268,26 +286,27 @@ Template.Page.events({
 ```jsx
 Page = React.createClass({displayName: "Page",
   mixins: [ReactMeteorData],
-  getMeteorData: function() {
-    this.selected = new ReactiveVar(false);
+  getMeteorData() {
     return {
       people() {
         return People.find();
-      },
-
-      isSelected: (context) => {
-        return this.selected.get() == context._id ? 'active' : '';
       }
     }
   },
-  clickHandler: function(context, event) {
-    this.selected.set(context._id);
+  getInitialState() {
+    selected: false
   },
-  render: function() {
+  isSelected(context) {
+    return this.state.selected == context._id ? 'active' : '';
+  },
+  clickHandler(context, event) {
+    this.setState({selected: context._id});
+  },
+  render() {
     return (<ul>{
       this.data.people.map((person, index) => {
-        return (<li key={index} onClick={this.clickHandler.bind(this, person)}
-          className={'item ' + this.data.isSelected.call(this, person)}>{person.name}</li>);
+        return (<li key={index} onClick={this.clickHandler(person)}
+          className={'item ' + this.isSelected(person)}>{person.name}</li>);
       });
     }</ul>);
   }
