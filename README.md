@@ -264,7 +264,7 @@ Page = React.createClass({
     }
   },
   getInitialState() {
-    selected: false
+    return {selected: false};
   },
   isSelected(context) {
     return this.state.selected == context._id ? 'active' : '';
