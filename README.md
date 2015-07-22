@@ -93,25 +93,19 @@ Template.Page.onRendered(<span class="pl-k rich-diff-level-one">function</span>(
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
 
-<pre class="rich-diff-level-zero">Page <span class="pl-k rich-diff-level-one">=</span> React.createClass({displayName<span class="pl-k rich-diff-level-one">:</span> <span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
-  mixins<span class="pl-k rich-diff-level-one">:</span> [ReactMeteorData],
-  <span class="pl-en rich-diff-level-one">getMeteorData</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
-    <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span> <span class="pl-k rich-diff-level-one">=</span> <span class="pl-k rich-diff-level-one">new</span> <span class="pl-en rich-diff-level-one">ReactiveVar</span>(<span class="pl-s rich-diff-level-one"><span class="pl-pds">'</span>React<span class="pl-pds">'</span></span>);
-    <span class="pl-k rich-diff-level-one">return</span> {
-      <span class="pl-en rich-diff-level-one">name</span>() {
-        <span class="pl-k rich-diff-level-one">return</span> <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span>.get();
-      }
-    }
+<pre>Page <span class="pl-k">=</span> React.createClass({displayName<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
+  <span class="pl-en">getIntialState</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+    name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>React<span class="pl-pds">'</span></span>
   },
-  <span class="pl-en rich-diff-level-one">componentDidMount</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
-    <span class="pl-c1 rich-diff-level-one">setTimeout</span>(()<span class="pl-k rich-diff-level-one"> =&gt;</span> {
-      <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span>.set(<span class="pl-s rich-diff-level-one"><span class="pl-pds">'</span>React: With a Blaze API<span class="pl-pds">'</span></span>);
-    }, <span class="pl-c1 rich-diff-level-one">2000</span>);
+  <span class="pl-en">componentDidMount</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+    <span class="pl-c1">setTimeout</span>(()<span class="pl-k"> =&gt;</span> {
+      <span class="pl-v">this</span>.setState({name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>React: With a Blaze API<span class="pl-pds">'</span></span>});
+    }, <span class="pl-c1">2000</span>);
   },
-  <span class="pl-en rich-diff-level-one">render</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
-    <span class="pl-k rich-diff-level-one">return</span> (<span class="pl-k rich-diff-level-one">&lt;</span>div className<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
-      Hello {<span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">data</span>.<span class="pl-c1 rich-diff-level-one">name</span>}
-    <span class="pl-k rich-diff-level-one">&lt;</span>/div<span class="pl-k rich-diff-level-one">&gt;</span>);
+  <span class="pl-en">render</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+    <span class="pl-k">return</span> (<span class="pl-k">&lt;</span>div className<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+      Hello {<span class="pl-v">this</span>.state.<span class="pl-c1">name</span>}
+    <span class="pl-k">&lt;</span>/div<span class="pl-k">&gt;</span>);
   }
 });</pre>
 
@@ -146,31 +140,6 @@ Template.Page.onRendered(function() {
 
 ```jsx
 Page = React.createClass({displayName: "Page",
-  mixins: [ReactMeteorData],
-  getMeteorData: function() {
-    this.name = new ReactiveVar('React');
-    return {
-      name() {
-        return this.name.get();
-      }
-    }
-  },
-  componentDidMount: function() {
-    setTimeout(() => {
-      this.name.set('React: With a Blaze API');
-    }, 2000);
-  },
-  render: function() {
-    return (<div className="page">
-      Hello {this.data.name}
-    </div>);
-  }
-});
-```
--->
-
-```jsx
-Page = React.createClass({displayName: "Page",
   getIntialState: function() {
     name: 'React'
   },
@@ -186,6 +155,7 @@ Page = React.createClass({displayName: "Page",
   }
 });
 ```
+-->
 
 ### Component with click handler
 
