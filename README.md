@@ -32,7 +32,7 @@ meteor add timbrandin:sideburns
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
 
-Page <span class="pl-k rich-diff-level-one">=</span> React.createClass({displayName<span class="pl-k rich-diff-level-one">:</span> <span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
+Page <span class="pl-k rich-diff-level-one">=</span> React.createClass({
   <span class="pl-en rich-diff-level-one">render</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
     <span class="pl-k rich-diff-level-one">return</span> (<span class="pl-k rich-diff-level-one">&lt;</span>div className<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
       Hello world
@@ -54,7 +54,7 @@ Page <span class="pl-k rich-diff-level-one">=</span> React.createClass({displayN
 
 <!--
 ```jsx
-Page = React.createClass({displayName: "Page",
+Page = React.createClass({
   render: function() {
     return (<div className="page">
       Hello world
@@ -93,7 +93,7 @@ Template.Page.onRendered(<span class="pl-k rich-diff-level-one">function</span>(
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
 
-<pre>Page <span class="pl-k">=</span> React.createClass({displayName<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
+<pre>Page <span class="pl-k">=</span> React.createClass({
   <span class="pl-en">getIntialState</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
     name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>React<span class="pl-pds">'</span></span>
   },
@@ -139,7 +139,7 @@ Template.Page.onRendered(function() {
 ```
 
 ```jsx
-Page = React.createClass({displayName: "Page",
+Page = React.createClass({
   getIntialState: function() {
     name: 'React'
   },
@@ -175,7 +175,7 @@ Template.Page.events({
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
 
-<pre>Page <span class="pl-k">=</span> React.createClass({displayName<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
+<pre>Page <span class="pl-k">=</span> React.createClass({
   <span class="pl-en">clickEvent</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
     <span class="pl-en">console</span><span class="pl-c1">.log</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello world<span class="pl-pds">'</span></span>);
   },
@@ -204,7 +204,7 @@ Template.Page.events({
 ```
 
 ```jsx
-Page = React.createClass({displayName: "Page",
+Page = React.createClass({
   clickEvent: function() {
     console.log('Hello world');
   },
@@ -254,7 +254,7 @@ Template.Page.events({
 #### React comparison
 
 ```jsx
-Page = React.createClass({displayName: "Page",
+Page = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
