@@ -176,10 +176,12 @@ var handler = function (compileStep) {
     extras += (code[1] || '');
   }
 
-  var outputFile = compileStep.inputPath + ".js";
+  var reactJsx = jsx + extras;
+  var outputFile = compileStep.inputPath + ".jsx";
 
+  // Capture jsx failures in compiling.
   try {
-    var result = Babel.transformMeteor(jsx + extras, {
+    var result = Babel.transformMeteor(reactJsx, {
       sourceMap: true,
       filename: compileStep.pathForSourceMap,
       sourceMapName: compileStep.pathForSourceMap,
@@ -211,7 +213,7 @@ var handler = function (compileStep) {
 
   compileStep.addJavaScript({
     path: outputFile,
-    sourcePath: compileStep.inputPath,
+    sourcePath: reactJsx,
     data: result.code,
     sourceMap: JSON.stringify(result.map)
   });
