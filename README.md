@@ -32,7 +32,7 @@ meteor add timbrandin:sideburns
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
 
-Page <span class="pl-k rich-diff-level-one">=</span> React.createClass({displayName<span class="pl-k rich-diff-level-one">:</span> <span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
+Page <span class="pl-k rich-diff-level-one">=</span> React.createClass({
   <span class="pl-en rich-diff-level-one">render</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
     <span class="pl-k rich-diff-level-one">return</span> (<span class="pl-k rich-diff-level-one">&lt;</span>div className<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
       Hello world
@@ -54,7 +54,7 @@ Page <span class="pl-k rich-diff-level-one">=</span> React.createClass({displayN
 
 <!--
 ```jsx
-Page = React.createClass({displayName: "Page",
+Page = React.createClass({
   render: function() {
     return (<div className="page">
       Hello world
@@ -93,25 +93,19 @@ Template.Page.onRendered(<span class="pl-k rich-diff-level-one">function</span>(
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
 
-<pre class="rich-diff-level-zero">Page <span class="pl-k rich-diff-level-one">=</span> React.createClass({displayName<span class="pl-k rich-diff-level-one">:</span> <span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
-  mixins<span class="pl-k rich-diff-level-one">:</span> [ReactMeteorData],
-  <span class="pl-en rich-diff-level-one">getMeteorData</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
-    <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span> <span class="pl-k rich-diff-level-one">=</span> <span class="pl-k rich-diff-level-one">new</span> <span class="pl-en rich-diff-level-one">ReactiveVar</span>(<span class="pl-s rich-diff-level-one"><span class="pl-pds">'</span>React<span class="pl-pds">'</span></span>);
-    <span class="pl-k rich-diff-level-one">return</span> {
-      <span class="pl-en rich-diff-level-one">name</span>() {
-        <span class="pl-k rich-diff-level-one">return</span> <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span>.get();
-      }
-    }
+<pre>Page <span class="pl-k">=</span> React.createClass({
+  <span class="pl-en">getIntialState</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+    <span class="pl-k">return</span> {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>React<span class="pl-pds">'</span></span>};
   },
-  <span class="pl-en rich-diff-level-one">componentDidMount</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
-    <span class="pl-c1 rich-diff-level-one">setTimeout</span>(()<span class="pl-k rich-diff-level-one"> =&gt;</span> {
-      <span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">name</span>.set(<span class="pl-s rich-diff-level-one"><span class="pl-pds">'</span>React: With a Blaze API<span class="pl-pds">'</span></span>);
-    }, <span class="pl-c1 rich-diff-level-one">2000</span>);
+  <span class="pl-en">componentDidMount</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+    <span class="pl-c1">setTimeout</span>(()<span class="pl-k"> =&gt;</span> {
+      <span class="pl-v">this</span>.setState({name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>React: With a Blaze API<span class="pl-pds">'</span></span>});
+    }, <span class="pl-c1">2000</span>);
   },
-  <span class="pl-en rich-diff-level-one">render</span><span class="pl-k rich-diff-level-one">:</span> <span class="pl-k rich-diff-level-one">function</span>() {
-    <span class="pl-k rich-diff-level-one">return</span> (<span class="pl-k rich-diff-level-one">&lt;</span>div className<span class="pl-k rich-diff-level-one">=</span><span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k rich-diff-level-one">&gt;</span>
-      Hello {<span class="pl-v rich-diff-level-one">this</span>.<span class="pl-c1 rich-diff-level-one">data</span>.<span class="pl-c1 rich-diff-level-one">name</span>}
-    <span class="pl-k rich-diff-level-one">&lt;</span>/div<span class="pl-k rich-diff-level-one">&gt;</span>);
+  <span class="pl-en">render</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+    <span class="pl-k">return</span> (<span class="pl-k">&lt;</span>div className<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>page<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+      Hello {<span class="pl-v">this</span>.state.<span class="pl-c1">name</span>}
+    <span class="pl-k">&lt;</span>/div<span class="pl-k">&gt;</span>);
   }
 });</pre>
 
@@ -145,24 +139,18 @@ Template.Page.onRendered(function() {
 ```
 
 ```jsx
-Page = React.createClass({displayName: "Page",
-  mixins: [ReactMeteorData],
-  getMeteorData: function() {
-    this.name = new ReactiveVar('React');
-    return {
-      name() {
-        return this.name.get();
-      }
-    }
+Page = React.createClass({
+  getIntialState: function() {
+    return {name: 'React'};
   },
   componentDidMount: function() {
     setTimeout(() => {
-      this.name.set('React: With a Blaze API');
+      this.setState({name: 'React: With a Blaze API'});
     }, 2000);
   },
   render: function() {
     return (<div className="page">
-      Hello {this.data.name}
+      Hello {this.state.name}
     </div>);
   }
 });
@@ -187,7 +175,7 @@ Template.Page.events({
 
 </code></span></pre></td><td valign="top"><pre lang="jsx" class="vicinity rich-diff-level-zero"><code>
 
-<pre>Page <span class="pl-k">=</span> React.createClass({displayName<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Page<span class="pl-pds">"</span></span>,
+<pre>Page <span class="pl-k">=</span> React.createClass({
   <span class="pl-en">clickEvent</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
     <span class="pl-en">console</span><span class="pl-c1">.log</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello world<span class="pl-pds">'</span></span>);
   },
@@ -216,7 +204,7 @@ Template.Page.events({
 ```
 
 ```jsx
-Page = React.createClass({displayName: "Page",
+Page = React.createClass({
   clickEvent: function() {
     console.log('Hello world');
   },
@@ -266,28 +254,29 @@ Template.Page.events({
 #### React comparison
 
 ```jsx
-Page = React.createClass({displayName: "Page",
+Page = React.createClass({
   mixins: [ReactMeteorData],
-  getMeteorData: function() {
-    this.selected = new ReactiveVar(false);
+  getMeteorData() {
     return {
       people() {
         return People.find();
-      },
-
-      isSelected: (context) => {
-        return this.selected.get() == context._id ? 'active' : '';
       }
     }
   },
-  clickHandler: function(context, event) {
-    this.selected.set(context._id);
+  getInitialState() {
+    return {selected: false};
   },
-  render: function() {
+  isSelected(context) {
+    return this.state.selected == context._id ? 'active' : '';
+  },
+  clickHandler(context, event) {
+    this.setState({selected: context._id});
+  },
+  render() {
     return (<ul>{
       this.data.people.map((person, index) => {
         return (<li key={index} onClick={this.clickHandler.bind(this, person)}
-          className={'item ' + this.data.isSelected.call(this, person)}>{person.name}</li>);
+          className={'item ' + this.isSelected(person)}>{person.name}</li>);
       });
     }</ul>);
   }
