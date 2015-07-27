@@ -63,7 +63,7 @@ class Page extends React.Component {
 
 ```jsx
 // page.jsx
-export class Page extends React.Component {
+class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {selected: false};
