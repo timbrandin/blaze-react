@@ -52,7 +52,7 @@ class Page extends React.Component {
   mixins: [Template.page.mixin],
   getInitialState: function() {
     return {selected: false};
-  },
+  }
   render() {
     return Template.page.template;
   }
@@ -87,7 +87,7 @@ class Page extends React.Component {
       </ul>
     </div>);
   }
-});
+}
 ```
 
 
