@@ -54,7 +54,7 @@ class Page extends React.Component {
     return {selected: false};
   }
   render() {
-    return Template.page.template;
+    return Template.page.render;
   }
 });
 ```
