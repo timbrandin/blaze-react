@@ -20,7 +20,7 @@ meteor add timbrandin:sideburns
 
 ## Getting started
 
-#### Ideas for version 0.3
+#### Ideas for version 0.3 (Using the new Meteor toolchain)
 
 ##### Disassembled
 
