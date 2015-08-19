@@ -18,8 +18,7 @@ Sideburns.check = function(context, string) {
   if (!context) {
     return false;
   }
-  var obj = context.data;
-  var str = 'this.data';
+  var obj = context;
   _.each(tests, function(test) {
     if (!obj) {
       return false;
