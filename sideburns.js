@@ -81,7 +81,7 @@ var handler = function (compileStep) {
           // Remove duplicate listeners.
           $(select).removeAttr(eventName);
           // Append new listener.
-          $(select).attr(eventName, "{__component.events['" + key + "'].bind(__component, typeof context != 'undefined' ? context : (this.data ? this.data : this))}");
+          $(select).attr(eventName, "{eventHandler.bind(__component, '" + key + "', typeof context != 'undefined' ? context : (this.data ? this.data : this))}");
           markup = $.html();
         }
       }
@@ -170,6 +170,9 @@ var handler = function (compileStep) {
     jsx += "  render: function() {\n";
     jsx += "    let __component = this;";
     jsx += "    let context = this.data;";
+    jsx += "    function eventHandler(key,context,event){";
+    jsx += "        __component.events[key].call(this,event,context);";
+    jsx += "    }";
     jsx += "    return (" + markup + ");";
     jsx += "  }\n";
     jsx += "};\n";
