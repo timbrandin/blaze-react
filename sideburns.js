@@ -54,6 +54,7 @@ var handler = function (compileStep) {
     jsx += "  _extend: {},\n";
     jsx += "  _instance: {},\n";
     jsx += "  onCreated: function(f) {return this._onCreated = f || (this._onCreated || function(){})},\n";
+    jsx += "  onRendered: function(f) {return this._onRendered = f || (this._onRendered || function(){})},\n";
     jsx += "  helpers: function(o) {return this._helpers = o || (this._helpers || {})},\n";
     jsx += "  extend: function(o) {return _.extend(this._extend, o || {})},\n";
     jsx += "  events: function() {}\n"; // Ignore, injected below.
@@ -166,6 +167,13 @@ var handler = function (compileStep) {
     jsx += "      _helpers[key] = helpers[key].call(self);\n";
     jsx += "    };\n";
     jsx += "    return _helpers;\n";
+    jsx += "  },\n";
+    jsx += "  componentDidMount: function() {\n";
+    jsx += "    let self = this;\n";
+    jsx += "    if (!self._rendered) {\n";
+    jsx += "      Tracker.nonreactive(function(){Template." + className + ".onRendered().call(self)});\n";
+    jsx += "      self._rendered = true;\n";
+    jsx += "    }\n";
     jsx += "  },\n";
     jsx += "  render: function() {\n";
     jsx += "    let __component = this;";
