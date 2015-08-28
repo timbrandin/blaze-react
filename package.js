@@ -19,6 +19,7 @@ Package.registerBuildPlugin({
   ],
   sources: [
     'react-events.js',
+    'spacebars-regex.js',
     'sideburns.js'
   ],
   npmDependencies: {
