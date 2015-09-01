@@ -92,60 +92,11 @@ var handler = function (compileStep) {
 
     /* START SPACEBARS */
 
-    // Add return and key={index} inside {{#each}}.
-    markup = markup.replace(/({{#each\s+[^}]+}}[^<]*)(<\w+)/g, '$1return ($2 key={index}');
-    // {{#each}} in
-    markup = markup.replace(/{{#each\s+([^\s]+)\s+in\s+([^}]+)\s*}}/g, "{(Sideburns.check(context, '$2')? context.$2 : []).map(function($1, index){let context=__component.data;context.$1=$1");
-    // {{/each}}
-    markup = markup.replace(/{{\/each}}/g, ");})}");
-
-    // ^{{#if}}
-    markup = markup.replace(/^\W*{{#if\s+(\w+)\s*}}/g, "<span>{Sideburns.check(context, '$1')?(");
-    // {{/if}}$
-    markup = markup.replace(/{{\/if}}\W*$/g, "):''}</span>");
-    // {{#if}}
-    markup = markup.replace(/{{#if\s+(\w+)\s*}}/g, "{Sideburns.check(context, '$1')?(");
-    // {{else}} {{/if}}
-    markup = markup.replace(/(?:{{else}}(?![\w\W]*{{else}}))([\w\W]*){{\/if}}/g, "):($1)}");
-    // {{/if}}
-    markup = markup.replace(/{{\/if}}/g, "):''}");
-
-    // ^{{#unless}}
-    markup = markup.replace(/^\W*{{#unless\s+(\w+)\s*}}/g, "<span>{!Sideburns.check(context, '$1')?(");
-    // {{/unless}}$
-    markup = markup.replace(/{{\/unless}}\W*$/g, "):''}</span>");
-    // {{#unless}}
-    markup = markup.replace(/{{#unless\s+(\w+)\s*}}/g, "{!Sideburns.check(context, '$1')?(");
-    // {{else}} {{/unless}}
-    markup = markup.replace(/(?:{{else}}(?![\w\W]*{{else}}))([\w\W]*){{\/unless}}/g, "):($1)}");
-    // {{/unless}}
-    markup = markup.replace(/{{\/unless}}/g, "):''}");
-
-    // {{helper}} raw HTML
-    markup = markup.replace(/{{{([^}]*)}}}/g, "{Sideburns.check(context, '$1')? context.data.$1 : ''}");
-
-    // {{helper}} SafeString – Dynamic Attribute (class)
-    markup = markup.replace(/\sclass={{([^}]*)}}/g, " className={Sideburns.check(context, '$1')? new Sideburns.classNames(context.$1) : ''}");
-
-    // {{helper}} SafeString – Dynamic Attribute (other)
-    markup = markup.replace(/={{([^}]*)}}/g, "={Sideburns.check(context, '$1')? new Sideburns.SafeString(context.$1) : ''}");
-
-    // {{helper}} SafeString – In Attribute Values (class)
-    markup = markup.replace(/\sclass="([^\"{]*){{([^}]*)}}([^\"{]*)\"/g, " className={Sideburns.check(context, '$2')? '$1' + new Sideburns.classNames(context.$2) + '$3' : ''}");
-
-    // {{helper}} SafeString – In Attribute Values (other)
-    markup = markup.replace(/="([^\"{]*){{([^}]*)}}([^\"{]*)\"/g, "={Sideburns.check(context, '$2')? '$1' + new Sideburns.classNames(context.$2) + '$3' : ''}");
-
-    // {{helper}} SafeString
-    markup = markup.replace(/{{([^}]*)}}/g, "{Sideburns.check(context, '$1')? new Sideburns.SafeString(context.$1) : ''}");
+    SpaceBarsReg.forEach(function (obj) {
+      markup = markup.replace(obj.regex, obj.replace);
+    });
 
     /* END SPACEBARS */
-
-    // Fix that annoying issue with React, and allow usage of class.
-    markup = markup.replace(/\sclass=/g, ' className=');
-
-    // Fix that annoying issue with React, and allow usage of for.
-    markup = markup.replace(/\sfor=/g, ' htmlFor=');
 
     // ES2015 Template for React components.
     jsx += "Template." + className + "._instance = {displayName: \"" + className + "\",\n";
