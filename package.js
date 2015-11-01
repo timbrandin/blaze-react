@@ -1,6 +1,6 @@
 Package.describe({
   name: 'timbrandin:sideburns',
-  version: '0.2.4',
+  version: '0.3.0',
   // Brief, one-line summary of the package.
   summary: 'React templates for Meteor',
   // URL to the Git repository containing the source code for this package.
@@ -10,42 +10,21 @@ Package.describe({
   documentation: 'README.md'
 });
 
-Package.registerBuildPlugin({
-  name: 'transpileJSXHTML',
-  use: [
-    'underscore@1.0.3',
-    'babel-compiler@5.4.7',
-    'cosmos:browserify@0.4.0',
-  ],
-  sources: [
-    'react-events.js',
-    'sideburns.js'
-  ],
-  npmDependencies: {
-    'cheerio': '0.7.0',
-    'eval': '0.1.0'
-  }
-});
-
-Npm.depends({
-  "classnames": "2.1.3"
-});
-
 Package.onUse(function (api) {
-  // We need the Babel helpers as a run-time dependency of the generated code.
-  api.imply('babel-runtime@0.1.0');
-  api.imply('react-meteor-data@0.1.0');
-  api.use(['cosmos:browserify@0.4.0'], 'client');
+  api.versionsFrom('1.2.1');
+  api.use([
+    'jsx@0.1.6',
+    'timbrandin:react-templates@0.0.3'
+  ]);
+  api.imply([
+    'timbrandin:react-templates@0.0.3'
+  ]);
+
+  api.use('kadira:flow-router-ssr@3.5.0', ['client', 'server'], {weak: true});
 
   api.addFiles([
-    'classnames-server.js',
-    'sideburns-export.js'
-  ], 'server');
+    'template.jsx'
+  ]);
 
-  api.addFiles([
-    'client.browserify.js',
-    'sideburns-export.js'
-  ], 'client');
-
-  api.export('Sideburns');
+  api.export('Template');
 });
