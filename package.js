@@ -20,6 +20,8 @@ Package.onUse(function (api) {
     'timbrandin:react-templates'
   ]);
 
+  api.use('kadira:flow-router-ssr@3.5.0', ['client', 'server'], {weak: true});
+
   api.addFiles([
     'template.jsx'
   ]);

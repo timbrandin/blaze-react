@@ -1,5 +1,5 @@
-Template = {
-  _init: function(type, name) {
+Template = class {
+  static _init(type, name) {
     Template[name] = class extends React.Component {
       constructor(props) {
         super(props);
@@ -64,12 +64,51 @@ Template = {
       }
     }
     if (type === 'body') {
-      if (Meteor.isClient) {
-        Meteor.startup(function() {
-          let body = React.createElement(Template[name]);
-          ReactDOM.render(body, document.body);
-        });
+      if (Package['kadira:flow-router-ssr'] && Meteor.isClient) {
+        // Disable warnings of missing "/" route.
+        Package['kadira:flow-router-ssr'].FlowRouter.route('/');
       }
+
+      // Wait for DOM is loaded.
+      Meteor.startup(function() {
+        let body = React.createElement(Template[name]);
+        if (Meteor.isClient) {
+          ReactDOM.render(body, Template._getRootNode());
+        }
+        else if (Package['kadira:flow-router-ssr']) {
+          // Enable fast page loads using flow-router-ssr.
+          var FlowRouter = Package['kadira:flow-router-ssr'].FlowRouter;
+          FlowRouter.setDeferScriptLoading(true);
+          FlowRouter.route('/', {
+            action: function() {
+              var rootNodeHtml = Template._buildRootNode();
+              let elHtml = ReactDOMServer.renderToString(body);
+              let html = rootNodeHtml.replace('</span>', elHtml + '</span>');
+
+              var ssrContext = FlowRouter.ssrContext.get();
+              ssrContext.setHtml(html);
+            }
+          });
+        }
+      });
+    }
+  }
+
+  static _buildRootNode() {
+    return `<span id="react-root"></span>`;
+  }
+
+  static _getRootNode() {
+    var rootNode = document.getElementById('react-root');
+
+    if(rootNode) {
+      return rootNode;
+    } else {
+      var rootNodeHtml = Template._buildRootNode();
+      var body = document.getElementsByTagName('body')[0];
+      body.insertAdjacentHTML('beforeend', rootNodeHtml);
+      rootNode = document.getElementById('react-root');
+      return rootNode;
     }
   }
 };
