@@ -12,24 +12,29 @@ Template = {
       init() {
         const self = this;
         this._comps = {};
-        this._context = {};
-        this._helpers = Template[name]._helpers || {};
-        _.each(this._helpers, (fn, helper) => {
-          this._context[helper] = function() {
-            if (!self._comps[helper]) {
-              let state = {}, initial = true;
-              self._comps[helper] = Tracker.autorun(() => {
-                state[helper] = fn.apply(self, arguments);
-                if (!initial)
-                  self.setState(state);
-              });
-              initial = false;
-              return state[helper];
+        this.state = {};
+        this.data = {};
+        this.events = Template[name]._events || {};
+        this.helpers = Template[name]._helpers || {};
+
+        _.each(this.helpers, (fn, helper) => {
+          // Define properties for all helpers.
+          Object.defineProperty(this.data, helper, {
+            get: function() {
+              if (!self._comps[helper]) {
+                let state = {}, initial = true;
+                self._comps[helper] = Tracker.autorun(() => {
+                  self.state[helper] = fn.apply(self, arguments);
+                  if (!initial)
+                    self.setState(state);
+                });
+                initial = false;
+              }
+              if (self.state && typeof self.state[helper] !== "undefined") {
+                return self.state[helper];
+              }
             }
-            else {
-              return self.state && self.state[helper] ? self.state[helper] : '';
-            }
-          }
+          });
         });
       }
 
@@ -50,12 +55,12 @@ Template = {
       }
 
       static events(events) {
-        this.events = this.events || {};
-        _.extend(this.events, events);
+        this._events = this._events || {};
+        _.extend(this._events, events);
       }
 
       render() {
-        return ReactTemplate[name](this._context);
+        return ReactTemplate[name](this, this.data);
       }
     }
     if (type === 'body') {
