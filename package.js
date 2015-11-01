@@ -1,6 +1,6 @@
 Package.describe({
   name: 'timbrandin:sideburns',
-  version: '0.2.4',
+  version: '0.3.0',
   // Brief, one-line summary of the package.
   summary: 'React templates for Meteor',
   // URL to the Git repository containing the source code for this package.
@@ -14,10 +14,10 @@ Package.onUse(function (api) {
   api.versionsFrom('1.2.1');
   api.use([
     'jsx@0.1.6',
-    'timbrandin:react-templates'
+    'timbrandin:react-templates@0.0.3'
   ]);
   api.imply([
-    'timbrandin:react-templates'
+    'timbrandin:react-templates@0.0.3'
   ]);
 
   api.use('kadira:flow-router-ssr@3.5.0', ['client', 'server'], {weak: true});
