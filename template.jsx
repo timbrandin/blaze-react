@@ -122,7 +122,7 @@ Template = class {
         this._callbacks.destroyed.push(callback);
       }
 
-      static autorun(runFunc, onError) {
+      autorun(runFunc, onError) {
         this._trackers = this._trackers || [];
 
         if (Tracker.active) {
@@ -150,7 +150,7 @@ Template = class {
         return comp;
       }
 
-      static subscribe(name, ...args) {
+      subscribe(name, ...args) {
         if (this.isDestroyed) {
           throw new Error("Can't subscribe inside onDestroyed callback!");
         }
@@ -231,7 +231,7 @@ Template = class {
         return subHandle;
       }
 
-      static subscriptionsReady() {
+      subscriptionsReady() {
         // This dependency is used to identify state transitions in
         // _subscriptionHandles which could cause the result of
         // subscriptionsReady to change. Basically this is triggered
