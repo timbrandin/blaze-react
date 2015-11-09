@@ -14,7 +14,8 @@ Package.onUse(function (api) {
   api.versionsFrom('1.2.1');
   api.use([
     'jsx@0.1.6',
-    'timbrandin:react-templates@0.0.3'
+    'timbrandin:react-templates@0.0.3',
+    'check'
   ]);
   api.imply([
     'timbrandin:react-templates@0.0.3'

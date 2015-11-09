@@ -4,24 +4,7 @@ Template = class {
       constructor(props) {
         super(props);
 
-        Template[name]._callbacks = {
-          created: [],
-          rendered: [],
-          destroyed: []
-        };
-
         console.log("constructing "+ name + " with: ", this);
-
-        // This dependency is used to identify state transitions in
-        // _subscriptionHandles which could cause the result of
-        // subscriptionsReady to change. Basically this is triggered
-        // whenever a new subscription handle is added or when a subscription handle
-        // is removed and they are not ready.
-        this._allSubsReadyDep = new Tracker.Dependency();
-        this._allSubsReady = false;
-        this.subscriptionHandles = {};
-
-        this._trackers = [];
 
         this.init();
       }
@@ -30,13 +13,14 @@ Template = class {
        * Initiates helpers, computations and sets the context.
        */
       init() {
-        // Create TemplateInstance
         const self = this;
         this._comps = {};
         this.state = {};
         this.data = {};
         this.events = Template[name]._events || {};
         this.helpers = Template[name]._helpers || {};
+
+        _.extend(this.helpers, Template._globalHelpers);
 
         _.each(this.helpers, (fn, helper) => {
           // Define properties for all helpers.
@@ -61,38 +45,39 @@ Template = class {
       }
 
       componentWillMount() {
-        var initState = {};
+        Template[name]._callbacks = Template[name]._callbacks || {};
+        Template[name]._callbacks.created = Template[name]._callbacks.created || [];
 
         // Call all registered 'onCreated' callbacks
-        _.each(this._callbacks.created, function (func) {
-          func();
-          // Add initial state objects to return to getInitialState()
-          _.extend(initState, state);
+        _.each(Template[name]._callbacks.created, (func) => {
+          func.apply(Template[name]);
         });
-
-        return initState || {};
       }
 
       componentDidMount() {
         // this.init(true);
         // console.log(this.state);
+        Template[name]._callbacks = Template[name]._callbacks || {};
+        Template[name]._callbacks.rendered = Template[name]._callbacks.rendered || [];
 
         // Call all registered 'onRendered' callbacks
-        _.each(this._callbacks.rendered, function (func) {
-          func();
+        _.each(Template[name]._callbacks.rendered, (func) => {
+          func.apply(Template[name]);
         });
       }
 
       componentWillUnmount() {
         // Prevent certain methods from being iniated in onDestroyed callback
-        this.isDestroyed = true;
+        Template[name].isDestroyed = true;
+        Template[name]._callbacks = Template[name]._callbacks || {};
+        Template[name]._callbacks.destroyed = Template[name]._callbacks.destroyed || [];
 
         for (let comp of this._comps) {
           comp.stop();
         }
         // Call all registered 'onDestroyed' callbacks
-        _.each(this._callbacks.destroyed, function (func) {
-          func();
+        _.each(Template[name]._callbacks.destroyed, (func) => {
+          func.apply(Template[name]);
         });
         // Stop all template subscriptions
         _.each(this.subscriptionHandles, function (handle) {
@@ -114,7 +99,8 @@ Template = class {
         if (typeof callback !== "function") {
           throw new Error("onCreated callback must be a function");
         }
-        console.log("onCreated context: ", this);
+        this._callbacks = this._callbacks || {};
+        this._callbacks.created = this._callbacks.created || [];
         // Add onCreated callback
         this._callbacks.created.push(callback);
       }
@@ -123,6 +109,8 @@ Template = class {
         if (typeof callback !== "function") {
           throw new Error("onRendered callback must be a function");
         }
+        this._callbacks = this._callbacks || {};
+        this._callbacks.rendered = this._callbacks.rendered || [];
         // Add onRendered callback
         this._callbacks.rendered.push(callback);
       }
@@ -131,11 +119,15 @@ Template = class {
         if (typeof callback !== "function") {
           throw new Error("onDestroyed callback must be a function");
         }
+        this._callbacks = this._callbacks || {};
+        this._callbacks.destroyed = this._callbacks.destroyed || [];
         // Add onDestroyed callback
         this._callbacks.destroyed.push(callback);
       }
 
       static autorun(runFunc, onError) {
+        this._trackers = this._trackers || [];
+
         if (Tracker.active) {
           throw new Error(
             "Can't call Template#autorun from a Tracker Computation;"
@@ -144,10 +136,11 @@ Template = class {
         // Give the autorun function a better name for debugging and profiling.
         // The `displayName` property is not part of the spec but browsers like Chrome
         // and Firefox prefer it in debuggers over the name function was declared by.
-        runFunc.displayName =
-          (self.name || 'anonymous') + ':' + (displayName || 'anonymous');
+        //runFunc.displayName =
+        //  (self.name || 'anonymous') + ':' + (displayName || 'anonymous');
         // Create autorun
         let comp = Tracker.autorun(runFunc, onError);
+
         // Track the tracker ;)
         this._trackers.push(comp);
 
@@ -165,6 +158,13 @@ Template = class {
           throw new Error("Can't subscribe inside onDestroyed callback!");
         }
         let subHandles = this._subscriptionHandles = this._subscriptionHandles || {};
+        // This dependency is used to identify state transitions in
+        // _subscriptionHandles which could cause the result of
+        // subscriptionsReady to change. Basically this is triggered
+        // whenever a new subscription handle is added or when a subscription handle
+        // is removed and they are not ready.
+        this._allSubsReadyDep = this._allSubsReadyDep || new Tracker.Dependency();
+        this._allSubsReady = this._allSubsReady || false;
         // Duplicate logic from Meteor.subscribe
         var options = {};
         if (args.length) {
@@ -235,6 +235,15 @@ Template = class {
       }
 
       static subscriptionsReady() {
+        // This dependency is used to identify state transitions in
+        // _subscriptionHandles which could cause the result of
+        // subscriptionsReady to change. Basically this is triggered
+        // whenever a new subscription handle is added or when a subscription handle
+        // is removed and they are not ready.
+        this._allSubsReadyDep = this._allSubsReadyDep || new Tracker.Dependency();
+        this._allSubsReady = this._allSubsReady || false;
+        this._subscriptionHandles = this._subscriptionHandles || {};
+
         this._allSubsReadyDep.depend();
 
         this._allSubsReady = _.all(this._subscriptionHandles, function (handle) {
