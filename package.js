@@ -15,7 +15,8 @@ Package.onUse(function (api) {
   api.use([
     'jsx@0.1.6',
     'timbrandin:react-templates@0.0.3',
-    'check'
+    'check',
+    'minimongo'
   ]);
   api.imply([
     'timbrandin:react-templates@0.0.3'
