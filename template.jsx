@@ -47,7 +47,7 @@ Template = class {
 
         // Call all registered 'onCreated' callbacks
         _.each(Template[name]._callbacks.created, (func) => {
-          func.apply(Template[name]);
+          func.apply(this);
         });
       }
 
@@ -59,7 +59,7 @@ Template = class {
 
         // Call all registered 'onRendered' callbacks
         _.each(Template[name]._callbacks.rendered, (func) => {
-          func.apply(Template[name]);
+          func.apply(this);
         });
       }
 
@@ -69,12 +69,12 @@ Template = class {
         Template[name]._callbacks = Template[name]._callbacks || {};
         Template[name]._callbacks.destroyed = Template[name]._callbacks.destroyed || [];
 
-        for (let comp of this._comps) {
+        _.each(this._comps, (comp) => {
           comp.stop();
-        }
+        });
         // Call all registered 'onDestroyed' callbacks
         _.each(Template[name]._callbacks.destroyed, (func) => {
-          func.apply(Template[name]);
+          func.apply(this);
         });
         // Stop all template subscriptions
         _.each(this.subscriptionHandles, function (handle) {
