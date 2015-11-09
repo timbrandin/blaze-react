@@ -365,13 +365,13 @@ Page = React.createClass({
 
 - [x] .html.jsx templates
 - [x] Blaze helpers
-- [ ] Blaze helper context
-- [x] Blaze onCreated
+- [ ] Blaze helper context (with the data from the context)
+- [x] Blaze onCreated @TwinTailsX
 - [x] Blaze events
-- [ ] Blaze onRendered
-- [ ] Blaze onDestroyed
-- [ ] Blaze autorun
-- [ ] Blaze subscribe
+- [x] Blaze onRendered @TwinTailsX
+- [x] Blaze onDestroyed @TwinTailsX
+- [x] Blaze autorun @TwinTailsX @facespacey
+- [x] Blaze subscribe @TwinTailsX @facespacey
 - [x] Spacebars {{helper}} (SafeString)
 - [x] Spacebars {{{helper}}} (raw HTML)
 - [x] Spacebars "{{helper}}" (SafeString – In Attribute Values)
