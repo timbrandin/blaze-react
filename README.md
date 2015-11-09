@@ -370,8 +370,8 @@ Page = React.createClass({
 - [x] Blaze events
 - [x] Blaze onRendered @TwinTailsX
 - [x] Blaze onDestroyed @TwinTailsX
-- [x] Blaze autorun [@TwinTailsX](/TwinTailsX) @facespacey
-- [x] Blaze subscribe @TwinTailsX @facespacey
+- [x] Blaze autorun @TwinTailsX
+- [x] Blaze subscribe @TwinTailsX
 - [x] Spacebars {{helper}} (SafeString)
 - [x] Spacebars {{{helper}}} (raw HTML)
 - [x] Spacebars "{{helper}}" (SafeString – In Attribute Values)
