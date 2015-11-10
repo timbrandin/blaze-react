@@ -12,7 +12,6 @@ Template = class {
       init() {
         const self = this;
         this._comps = {};
-        this.state = {};
         this.data = {};
         this.events = Template[name]._events || {};
         this.helpers = Template[name]._helpers || {};
@@ -22,20 +21,25 @@ Template = class {
         _.each(this.helpers, (fn, helper) => {
           // Define properties for all helpers.
           Object.defineProperty(this.data, helper, {
-            get: function() {
-              if (!self._comps[helper]) {
+            get: function(...args) {
+              args.push(self);
+              if (typeof self._comps[helper] === 'undefined') {
+                // Create a computation for the helper.
                 let state = {}, initial = true;
                 self._comps[helper] = Tracker.autorun(() => {
-                  self.state[helper] = fn.apply(self, arguments);
+                  state[helper] = fn.apply(this, args);
+                  // If helper returns a cursor, let's fetch the data for the state.
+                  if (state[helper] instanceof LocalCollection.Cursor) {
+                    state[helper] = state[helper].fetch();
+                  }
                   if (!initial) {
+                    // Set the state on the React Component.
                     self.setState(state);
                   }
                 });
                 initial = false;
               }
-              if (self.state && typeof self.state[helper] !== "undefined") {
-                return self.state[helper];
-              }
+              return fn.apply(this, args);
             }
           });
         });
