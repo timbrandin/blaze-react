@@ -38,7 +38,7 @@ Events = class {
       }
     });
 
-    // Evaluate replaced expressions to add events into memory.
+    // Evaluate replaced expressions to add event-maps into memory.
     eval(events);
   }
 
