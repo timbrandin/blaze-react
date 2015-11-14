@@ -9,7 +9,7 @@
 ## Installation
 
 ```bash
-meteor add timbrandin:sideburns
+meteor add timbrandin:blaze-react
 ```
 
 ## Demo
