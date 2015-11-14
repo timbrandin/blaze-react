@@ -1,3 +1,5 @@
+const fs = Npm.require('fs');
+
 Events = class {
   static reset() {
     this._events = {};
@@ -16,50 +18,43 @@ Events = class {
     }
     return {};
   }
-};
 
-/**
- * Helper class that finds events before the templates are compiled to enable
- * injecting them in the markup for the defined selectors.
- */
-class BlazeEventsFinder extends BabelCompiler {
-  processFilesForTarget(inputFiles) {
-    super(inputFiles);
+  /**
+   * Helper class that finds events before the templates are compiled to enable
+   * injecting them in the markup for the defined selectors.
+   */
+  static findEventsInCode(code) {
     Events.reset();
 
-    // Pass through all javascript files.
-    inputFiles.forEach(function (inputFile) {
-      // Find and evaluate events to enable adding them to a template.
-      let events = "";
-      let original = inputFile.getContentsAsString();
-      EventsRegex.forEach(function (obj) {
-        if (!obj.replace) {
-          let found = original.match(obj.regex);
-          events += (found || []).join("\n");
-        }
-        else {
-          events = events.replace(obj.regex, obj.replace);
-        }
-      });
-
-      // Compile ES6 features.
-      var babelOptions = Babel.getDefaultOptions();
-      babelOptions.sourceMap = false;
-      try {
-        var result = Babel.compile(events, babelOptions);
-      } catch (e) {}
-
-      // Finally evaluate matched and replaced expression containing all events
-      // for the templates.
-      if (result && result.code) {
-        eval(result.code);
+    // Find and evaluate events to enable adding them to a template.
+    let events = "";
+    EventsRegex.forEach(function (obj) {
+      if (!obj.replace) {
+        let found = code.match(obj.regex);
+        events += (found || []).join("\n");
+      }
+      else {
+        events = events.replace(obj.regex, obj.replace);
       }
     });
-  }
-}
 
-Plugin.registerCompiler({
-  extensions: ['js'],
-}, function () {
-  return new BlazeEventsFinder();
-});
+    // Evaluate replaced expressions to add events into memory.
+    eval(events);
+  }
+};
+
+// Hook into fs.writeFile to read the events map into memory.
+const original = fs.writeFile;
+fs.writeFile = function(file, data) {
+  let options = JSON.parse(data);
+  if (options && options.map && options.map.sources) {
+    // Simple test to only look for events in .js files.
+    for(let i in options.map.sources) {
+      if (/\.js$/.test(options.map.sources[i])) {
+        Events.findEventsInCode(options.code);
+        break;
+      }
+    }
+  }
+  original.apply(fs, arguments);
+}

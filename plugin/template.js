@@ -1,4 +1,4 @@
-var cheerio = Npm.require('cheerio');
+const cheerio = Npm.require('cheerio');
 
 /**
  * Helper class to compile Blaze templates to React Components.

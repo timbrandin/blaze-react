@@ -38,11 +38,13 @@ Package.onUse(function (api) {
   api.versionsFrom('1.2.1');
 
   api.use([
+    'ecmascript@0.1.6',
     'isobuild:compiler-plugin@1.0.0',
     'babel-compiler',
     'react-runtime@0.14.1_1'
   ]);
   api.imply([
+    'ecmascript@0.1.6',
     'babel-runtime@0.1.4',
     'ecmascript-runtime',
     'promise',
