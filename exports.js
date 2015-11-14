@@ -105,6 +105,7 @@ RT.lookup = function(context, name) {
   return obj;
 };
 
+// Helper to lookup a referenced name and return a safe string.
 RT.string = function(context, string) {
   let value = RT.lookup(context, string);
   if (value !== false) {
@@ -113,6 +114,7 @@ RT.string = function(context, string) {
   return "";
 }
 
+// Helper to lookup and return a template or component.
 RT.get = function(props) {
   // A template component exists.
   if (Template && Template[props.__name]) {
@@ -125,6 +127,7 @@ RT.get = function(props) {
   return "";
 }
 
+// Helper to bind events to the current component and with the current context.
 RT.event = function(component, key, context) {
   if (component && component.events && component.events[key]) {
     return component.events[key].bind(component, context);
