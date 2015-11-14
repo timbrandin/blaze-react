@@ -2,7 +2,7 @@
 
 ### v1.0.0
 
-> Project renamed to Blaze React (timbrandin:blaze-react), formerly known as Sideburns (timbrandin:sideburns) and React Templates (timbrandin:react-templates).
+> Project renamed to *Blaze React* (timbrandin:blaze-react), formerly known as *Sideburns* (timbrandin:sideburns) and React Templates (timbrandin:react-templates).
 
 * After a suggestion from @facespacey we're consolidating timbrandin:react-templates and timbrandin:sideburns to new package timbrandin:blaze-react.
 
