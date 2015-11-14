@@ -18,6 +18,10 @@ Events = class {
   }
 };
 
+/**
+ * Helper class that finds events before the templates are compiled to enable
+ * injecting them in the markup for the defined selectors.
+ */
 class BlazeEventsFinder extends BabelCompiler {
   processFilesForTarget(inputFiles) {
     super(inputFiles);
