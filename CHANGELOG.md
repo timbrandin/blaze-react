@@ -1,5 +1,15 @@
 # Change Log
 
+### v1.0.0
+
+* Consolidating timbrandin:react-templates and timbrandin:sideburns to new package timbrandin:blaze-react.
+
+### v0.3.2
+
+### v0.3.1
+
+### v0.3.0
+
 ### v0.2.4
 
 * Now including React ES6 JSX files instead of compiling to ES5 JS files.
