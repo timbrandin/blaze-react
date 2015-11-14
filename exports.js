@@ -1,6 +1,46 @@
 RT = RT || {};
 ReactTemplate = {};
 
+React.Component.createFromBlaze = function(type, className, renderFunc) {
+  ReactTemplate[className] = renderFunc;
+
+  Template[className] = class extends BlazeReact {
+    constructor(props) {
+      super(props, className);
+    }
+  }
+
+  if (type === 'body') {
+    if (Package['kadira:flow-router-ssr'] && Meteor.isClient) {
+      // Disable warnings of missing "/" route.
+      Package['kadira:flow-router-ssr'].FlowRouter.route('/');
+    }
+
+    // Wait for DOM is loaded.
+    Meteor.startup(function() {
+      let body = React.createElement(Template[className]);
+      if (Meteor.isClient) {
+        ReactDOM.render(body, Template._getRootNode());
+      }
+      else if (Package['kadira:flow-router-ssr']) {
+        // Enable fast page loads using flow-router-ssr.
+        var FlowRouter = Package['kadira:flow-router-ssr'].FlowRouter;
+        FlowRouter.setDeferScriptLoading(true);
+        FlowRouter.route('/', {
+          action: function() {
+            var rootNodeHtml = Template._buildRootNode();
+            let elHtml = ReactDOMServer.renderToString(body);
+            let html = rootNodeHtml.replace('</span>', elHtml + '</span>');
+
+            var ssrContext = FlowRouter.ssrContext.get();
+            ssrContext.setHtml(html);
+          }
+        });
+      }
+    });
+  }
+}
+
 // Build out Handlebars basic SafeString type
 RT.SafeString = function(string) {
   this.string = string;
@@ -74,12 +114,4 @@ RT.event = function(component, key, context) {
   if (component && component.events && component.events[key]) {
     return component.events[key].bind(component, context);
   }
-}
-
-RT.template = function(name) {
-  Template._init('template', name);
-}
-
-RT.body = function(name) {
-  Template._init('body', name);
 }

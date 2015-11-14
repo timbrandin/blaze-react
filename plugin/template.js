@@ -1,12 +1,26 @@
 var cheerio = Npm.require('cheerio');
 
-ReactTemplate = class {
-  constructor(source) {
-    this._source = source;
+/**
+ * Helper class to compile Blaze templates to React Components.
+ */
+ReactCompiler = class {
+  /**
+   * Parse templates to React Component.
+   * @param  {String} code Contents of the template file.
+   * @return {String}      Code that in runtime creates a React Component for the Template.
+   */
+  static parse(code) {
+    return ReactCompiler.parseTemplates(code);
   }
 
-  static compile(className, markup) {
-    markup = ReactTemplate.appendEventMap(className, markup);
+  /**
+   * Parse template markup to React flavored jsx code (used by the template parser).
+   * @param  {String} className The name of the template.
+   * @param  {String} markup    The markup of the template.
+   * @return {String}           Valid jsx markup.
+   */
+  static parseMarkup(className, markup) {
+    markup = ReactCompiler.injectEventHandlers(className, markup);
 
     ReactRegex.forEach(function (obj) {
       markup = markup.replace(obj.regex, obj.replace);
@@ -15,7 +29,26 @@ ReactTemplate = class {
     return markup;
   }
 
-  static appendEventMap(className, markup) {
+  /**
+   * Find and parse templates in html files.
+   * @param  {String} content The content of the file.
+   * @return {String}        Valid jsx and code generating React Components for the Templates found in the content.
+   */
+  static parseTemplates(content) {
+    TemplateRegex.forEach(function (obj) {
+      content = content.replace(obj.regex, obj.replace);
+    });
+
+    return content;
+  }
+
+  /**
+   * Inject event handlers in markup from the defined event handlers on a template.
+   * @param  {String} className The name of the template.
+   * @param  {String} markup    The markup of the template.
+   * @return {String}           Valid markup with jsx event handlers injected on the matching elements from the selector in the event handler.
+   */
+  static injectEventHandlers(className, markup) {
     var events = Events.getEvents(className);
 
     // Cheerio doesn't like tags without a trailing end.
@@ -46,39 +79,30 @@ ReactTemplate = class {
 
     return markup;
   }
-
-  parse(source) {
-    let jsx = source;
-
-    TemplateRegex.forEach(function (obj) {
-      jsx = jsx.replace(obj.regex, obj.replace);
-    });
-
-    return jsx;
-  }
-
-  toString() {
-    return this.parse(this._source);
-  }
 }
 
+/**
+ * The compiler used by the toolchain plugin, initally parsing templates to
+ * react components and overrideable template functions and finally transpiling
+ * ES2015 to valid JavaScript.
+ */
 class ReactTemplateCompiler {
   processFilesForTarget(inputFiles) {
     inputFiles.forEach(function (inputFile) {
-      let original = inputFile.getContentsAsString();
+      const original = inputFile.getContentsAsString();
       var inputFilePath = inputFile.getPathInPackage();
       var outputFilePath = inputFile.getPathInPackage();
       var fileOptions = inputFile.getFileOptions();
       var toBeAdded = {
         sourcePath: outputFilePath,
-        path: outputFilePath.replace('.jsx.html', '.jsx.js'),
+        path: outputFilePath,
         data: original,
         hash: inputFile.getSourceHash(),
         sourceMap: null,
         bare: !! fileOptions.bare
       };
 
-      source = "" + new ReactTemplate(original);
+      source = ReactCompiler.parse(original);
       const result = ReactTemplateCompiler.transpile(source, inputFile);
       toBeAdded.data = result.code;
       toBeAdded.hash = result.hash;

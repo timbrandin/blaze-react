@@ -1,6 +1,6 @@
 TemplateRegex = [
   {
-    // Replace the head with a reactive dochead component.
+    // Replace the head with a dochead code.
     regex: /<(head)[^<>]*>([\w\W]*?(<\1[^<>]*>[\w\W]*?<\/\1>)*[\w\W]*?)<\/\1>/g,
     replace: function(match, className, code) {
       let markup = code;
@@ -14,20 +14,18 @@ TemplateRegex = [
     // Replace the body template with a React Component.
     regex: /<(body)[^<>]*>([\w\W]*?(<\1[^<>]*>[\w\W]*?<\/\1>)*[\w\W]*?)<\/\1>/g,
     replace: function(match, className, code) {
-      const markup = ReactTemplate.compile(className, code || '');
-      return `ReactTemplate["${className}"] = (component, context) => {
-        return (${markup})
-      }; RT.body("${className}");`
+      // We need to pass template name to the template parser to enable injection of events defined in the app.
+      const markup = ReactCompiler.parseMarkup(className, code || '');
+      return `React.Component.createFromBlaze("body", "${className}", (component, context) => { return (${markup}) });`;
     }
   },
   {
     // Replace templates with a React Component.
-    regex: /<(template)\sname="([^"]+)"[^<>]*>([\w\W]*?(<\1[^<>]*>[\w\W]*?<\/\1>)*[\w\W]*?)<\/\1>/g,
+    regex: /<(template)\s+name="([^"]+)"[^<>]*>([\w\W]*?(<\1[^<>]*>[\w\W]*?<\/\1>)*[\w\W]*?)<\/\1>/g,
     replace: function(match, tag, className, code) {
-      const markup = ReactTemplate.compile(className, code || '');
-      return `ReactTemplate["${className}"] = (component, context) => {
-        return (${markup})
-      }; RT.template("${className}");`;
+      // We need to pass template name to the template parser to enable injection of events defined in the app.
+      const markup = ReactCompiler.parseMarkup(className, code || '');
+      return `React.Component.createFromBlaze("template", "${className}", (component, context) => { return (${markup}) });`;
     }
   }
 ];

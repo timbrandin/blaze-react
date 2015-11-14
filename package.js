@@ -40,6 +40,7 @@ Package.onUse(function (api) {
   api.use([
     'isobuild:compiler-plugin@1.0.0',
     'babel-compiler',
+    'react-runtime@0.14.1_1'
   ]);
   api.imply([
     'babel-runtime@0.1.4',
