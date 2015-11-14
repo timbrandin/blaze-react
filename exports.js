@@ -25,7 +25,6 @@ React.Component.createFromBlaze = function(type, className, renderFunc) {
       else if (Package['kadira:flow-router-ssr']) {
         // Enable fast page loads using flow-router-ssr.
         var FlowRouter = Package['kadira:flow-router-ssr'].FlowRouter;
-        FlowRouter.setDeferScriptLoading(true);
         FlowRouter.route('/', {
           action: function() {
             var rootNodeHtml = Template._buildRootNode();
