@@ -17,12 +17,12 @@ Package.registerBuildPlugin({
     'tracker@1.0.9'
   ],
   sources: [
-    'events-regex.js',
+    'lib/events-regex.js',
     'plugin/events.js',
 
-    'template-regex.js',
-    'react-regex.js',
-    'react-events.js',
+    'lib/template-regex.js',
+    'lib/react-regex.js',
+    'lib/react-events.js',
     'plugin/template.js'
   ],
   npmDependencies: {
@@ -61,17 +61,17 @@ Package.onUse(function (api) {
   api.use('kadira:flow-router-ssr@3.5.0', ['client', 'server'], {weak: true});
 
   api.addFiles([
-    'exports-server.js',
-    'exports.js',
+    'lib/exports-server.js',
+    'lib/exports.js',
   ], 'server');
 
   api.addFiles([
-    'client.browserify.js',
-    'exports.js'
+    'lib/client.browserify.js',
+    'lib/exports.js'
   ], 'client');
 
   api.addFiles([
-    'template.jsx'
+    'lib/template.jsx'
   ]);
 
   api.export(['RT', 'ReactTemplate', 'Template']);
