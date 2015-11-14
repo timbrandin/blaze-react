@@ -53,7 +53,9 @@ Events = class {
     });
 
     // Evaluate replaced expressions to add event-maps into memory.
-    eval(events);
+    try {
+      eval(events);
+    } catch(e) {}
   }
 
   static parseFile(data) {
@@ -71,24 +73,39 @@ Events = class {
   }
 };
 
+// Read files on startup or when the package is added to meteor.
+const programPath = `${process.env.PWD}/.meteor/local/build/programs/server`;
+const programFile = fs.readFileSync(`${programPath}/program.json`, 'utf8');
+const files = JSON.parse(programFile).load;
+_.each(files, (file) => {
+  if (/\.js\.map$/.test(file.sourceMap)) {
+    let data = fs.readFileSync(`${programPath}/${file.path}`, 'utf8');
+    Events.findEventsInCode(file.path, data);
+  }
+});
+
 // Hook into fs.writeFile to read the events map into memory when written to file.
-const originalFsWriteFile = fs.writeFile;
-fs.writeFile = function(file, data) {
-  Events.parseFile(data);
-  originalFsWriteFile.apply(fs, arguments);
+if (!fs._writeFile) {
+  fs._writeFile = fs.writeFile;
+  fs.writeFile = function(file, data) {
+    Events.parseFile(data);
+    fs._writeFile.apply(fs, arguments);
+  }
 }
 
 // Hook into fs.readFileSync to read the events map into memory from the
 // ecmascript plugin cache.
-var originalFsReadFileSync = fs.readFileSync;
-fs.readFileSync = function(file, options) {
-  // Simple test to only look for events in the files from the plugin cache for the ecmascript package.
-  if (/\.meteor\/local\/plugin\-cache\/ecmascript\//.test(file)) {
-    let data = originalFsReadFileSync.apply(this, arguments);
-    Events.parseFile(data);
-    return data;
-  }
-  else {
-    return originalFsReadFileSync.apply(this, arguments);
+if (!fs._readFileSync) {
+  fs._readFileSync = fs.readFileSync;
+  fs.readFileSync = function(file, options) {
+    // Simple test to only look for events in the files from the plugin cache for the ecmascript package.
+    if (/\.meteor\/local\/plugin\-cache\/ecmascript\//.test(file)) {
+      let data = fs._readFileSync.apply(this, arguments);
+      Events.parseFile(data);
+      return data;
+    }
+    else {
+      return fs._readFileSync.apply(this, arguments);
+    }
   }
 }
