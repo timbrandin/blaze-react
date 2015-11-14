@@ -18,7 +18,7 @@ Events = class {
   }
 };
 
-class SideburnsCompiler extends BabelCompiler {
+class BlazeEventsFinder extends BabelCompiler {
   processFilesForTarget(inputFiles) {
     super(inputFiles);
     Events.reset();
@@ -57,5 +57,5 @@ class SideburnsCompiler extends BabelCompiler {
 Plugin.registerCompiler({
   extensions: ['js'],
 }, function () {
-  return new SideburnsCompiler();
+  return new BlazeEventsFinder();
 });
