@@ -41,20 +41,39 @@ Events = class {
     // Evaluate replaced expressions to add events into memory.
     eval(events);
   }
-};
 
-// Hook into fs.writeFile to read the events map into memory.
-const original = fs.writeFile;
-fs.writeFile = function(file, data) {
-  let options = JSON.parse(data);
-  if (options && options.map && options.map.sources) {
-    // Simple test to only look for events in .js files.
-    for(let i in options.map.sources) {
-      if (/\.js$/.test(options.map.sources[i])) {
-        Events.findEventsInCode(options.code);
-        break;
+  static parseFile(data) {
+    let options = JSON.parse(data);
+    if (options && options.map && options.map.sources) {
+      // Simple test to only look for events in .js files.
+      for(let i in options.map.sources) {
+        if (/\.js$/.test(options.map.sources[i])) {
+          Events.findEventsInCode(options.code);
+          break;
+        }
       }
     }
   }
-  original.apply(fs, arguments);
+};
+
+// Hook into fs.writeFile to read the events map into memory when written to file.
+const originalFsWriteFile = fs.writeFile;
+fs.writeFile = function(file, data) {
+  Events.parseFile(data);
+  originalFsWriteFile.apply(fs, arguments);
+}
+
+// Hook into fs.readFileSync to read the events map into memory from the
+// ecmascript plugin cache.
+var originalFsReadFileSync = fs.readFileSync;
+fs.readFileSync = function(file, options) {
+  // Simple test to only look for events in the files from the plugin cache for the ecmascript package.
+  if (/\.meteor\/local\/plugin\-cache\/ecmascript\//.test(file)) {
+    let data = originalFsReadFileSync.apply(this, arguments);
+    Events.parseFile(data);
+    return data;
+  }
+  else {
+    return originalFsReadFileSync.apply(this, arguments);
+  }
 }
