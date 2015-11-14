@@ -1,16 +1,28 @@
 RT = RT || {};
 ReactTemplate = {};
 
+/**
+ * Helper to create React Components for Blaze Templates.
+ * @param  {String} type          Template or body.
+ * @param  {String} className     The name of the template.
+ * @param  {Function} renderFunc  Function used to render the template.
+ * @return {void}
+ */
 React.Component.createFromBlaze = function(type, className, renderFunc) {
+  // Assign the render function to ReactTemplate for later use and allow for overrides.
   ReactTemplate[className] = renderFunc;
 
+  // Create React Component based on the BlazeReact class.
   Template[className] = class extends BlazeReact {
     constructor(props) {
       super(props, className);
     }
   }
 
+  // If type is body, we also want to render the component.
   if (type === 'body') {
+    // If the app is using flow-router-ssr we can also get server side rendering,
+    // here we setup so we don't get warnings of missing route for "/".
     if (Package['kadira:flow-router-ssr'] && Meteor.isClient) {
       // Disable warnings of missing "/" route.
       Package['kadira:flow-router-ssr'].FlowRouter.route('/');
@@ -18,10 +30,12 @@ React.Component.createFromBlaze = function(type, className, renderFunc) {
 
     // Wait for DOM is loaded.
     Meteor.startup(function() {
+      // Create and instanciate the React Component.
       let body = React.createElement(Template[className]);
       if (Meteor.isClient) {
         ReactDOM.render(body, Template._getRootNode());
       }
+      // If the app is using flow-router-ssr setup server side rendering using the "/" route.
       else if (Package['kadira:flow-router-ssr']) {
         // Enable fast page loads using flow-router-ssr.
         var FlowRouter = Package['kadira:flow-router-ssr'].FlowRouter;
@@ -48,6 +62,7 @@ RT.SafeString.prototype.toString = RT.SafeString.prototype.toHTML = function() {
   return '' + this.string;
 };
 
+// Helper to build out class from a list, object or a string in an attribute.
 RT.classNames = function(obj) {
   this.obj = obj;
 };
@@ -55,8 +70,9 @@ RT.classNames.prototype.toString = RT.classNames.prototype.toHTML = function() {
   return '' + new RT.SafeString(RT._classNames(this.obj));
 };
 
-RT.lookup = function(context, string) {
-  const tests = string.split('.');
+// Helper to lookup a referenced name in the context.
+RT.lookup = function(context, name) {
+  const tests = name.split('.');
   if (!context) {
     return false;
   }
