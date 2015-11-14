@@ -1,6 +1,6 @@
 Package.describe({
   name: 'timbrandin:blaze-react',
-  version: '1.0.0',
+  version: '0.4.0',
   summary: 'React templates for Meteor',
   git: 'https://github.com/timbrandin/blaze-react',
   documentation: 'README.md'

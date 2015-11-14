@@ -1,20 +1,33 @@
 const fs = Npm.require('fs');
 
+/**
+ * Class to manage eventmaps in memory.
+ */
 Events = class {
-  static reset() {
-    this._events = {};
+  static reset(filename) {
+    if (this._files && this._files[filename]) {
+      delete this._files[filename];
+    }
   }
 
-  static addEvents(template, events) {
-    this._events = this._events || {};
-    this._events[template] = this._events[template] || {};
+  static addEvents(filename, template, events) {
+    this._files = this._files || {};
+    this._files[filename] = this._files[filename] || {};
+
+    this._files[filename][template] = this._files[filename][template] || {};
     // Extend the existing events map with new events and allow override.
-    _.extend(this._events[template], events);
+    _.extend(this._files[filename][template], events);
   }
 
   static getEvents(template) {
-    if (this._events && this._events[template]) {
-      return this._events[template];
+    if (this._files) {
+      let events = {};
+      _.each(this._files, (file) => {
+        if (file[template]) {
+          _.extend(events, file[template]);
+        }
+      })
+      return events;
     }
     return {};
   }
@@ -23,8 +36,9 @@ Events = class {
    * Helper class that finds events before the templates are compiled to enable
    * injecting them in the markup for the defined selectors.
    */
-  static findEventsInCode(code) {
-    Events.reset();
+  static findEventsInCode(filename, code) {
+    // Clear the memory of previous events for this file.
+    Events.reset(filename);
 
     // Find and evaluate events to enable adding them to a template.
     let events = "";
@@ -34,7 +48,7 @@ Events = class {
         events += (found || []).join("\n");
       }
       else {
-        events = events.replace(obj.regex, obj.replace);
+        events = events.replace(obj.regex, obj.replace.bind({filename: filename}));
       }
     });
 
@@ -47,8 +61,9 @@ Events = class {
     if (options && options.map && options.map.sources) {
       // Simple test to only look for events in .js files.
       for(let i in options.map.sources) {
-        if (/\.js$/.test(options.map.sources[i])) {
-          Events.findEventsInCode(options.code);
+        let filename = options.map.sources[i];
+        if (/\.js$/.test(filename)) {
+          Events.findEventsInCode(filename, options.code);
           break;
         }
       }

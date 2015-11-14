@@ -1,6 +1,6 @@
 # Change Log
 
-### v1.0.0
+### v0.4.0
 
 > Project renamed to **Blaze React** (timbrandin:blaze-react), formerly known as **Sideburns** (timbrandin:sideburns) and React Templates (timbrandin:react-templates).
 
