@@ -92,20 +92,3 @@ if (!fs._writeFile) {
     fs._writeFile.apply(fs, arguments);
   }
 }
-
-// Hook into fs.readFileSync to read the events map into memory from the
-// ecmascript plugin cache.
-if (!fs._readFileSync) {
-  fs._readFileSync = fs.readFileSync;
-  fs.readFileSync = function(file, options) {
-    // Simple test to only look for events in the files from the plugin cache for the ecmascript package.
-    if (/\.meteor\/local\/plugin\-cache\/ecmascript\//.test(file)) {
-      let data = fs._readFileSync.apply(this, arguments);
-      Events.parseFile(data);
-      return data;
-    }
-    else {
-      return fs._readFileSync.apply(this, arguments);
-    }
-  }
-}
