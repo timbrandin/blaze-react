@@ -39,6 +39,7 @@ Package.onUse(function (api) {
 
   api.use([
     'ecmascript@0.1.6',
+    'underscore@1.0.4',
     'isobuild:compiler-plugin@1.0.0',
     'babel-compiler',
     'react-runtime@0.14.1_1'
