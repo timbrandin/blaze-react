@@ -57,23 +57,9 @@ Events = class {
       eval(events);
     } catch(e) {}
   }
-
-  static parseFile(data) {
-    let options = JSON.parse(data);
-    if (options && options.map && options.map.sources) {
-      // Simple test to only look for events in .js files.
-      for(let i in options.map.sources) {
-        let filename = options.map.sources[i];
-        if (/\.js$/.test(filename)) {
-          Events.findEventsInCode(filename, options.code);
-          break;
-        }
-      }
-    }
-  }
 };
 
-// Read files on startup or when the package is added to meteor.
+// Read files on startup or when the package is added/reloaded to meteor.
 const programPath = `${process.env.PWD}/.meteor/local/build/programs/server`;
 const programFile = fs.readFileSync(`${programPath}/program.json`, 'utf8');
 const files = JSON.parse(programFile).load;
