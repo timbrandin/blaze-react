@@ -61,14 +61,16 @@ Events = class {
 
 // Read files on startup or when the package is added/reloaded to meteor.
 const programPath = `${process.env.PWD}/.meteor/local/build/programs/server`;
-const programFile = fs.readFileSync(`${programPath}/program.json`, 'utf8');
-const files = JSON.parse(programFile).load;
-_.each(files, (file) => {
-  if (/\.js\.map$/.test(file.sourceMap)) {
-    let data = fs.readFileSync(`${programPath}/${file.path}`, 'utf8');
-    Events.findEventsInCode(file.path, data);
-  }
-});
+if (fs.existsSync(`${programPath}/program.json`)) {
+  const programFile = fs.readFileSync(`${programPath}/program.json`, 'utf8');
+  const files = JSON.parse(programFile).load;
+  _.each(files, (file) => {
+    if (/\.js\.map$/.test(file.sourceMap)) {
+      let data = fs.readFileSync(`${programPath}/${file.path}`, 'utf8');
+      Events.findEventsInCode(file.path, data);
+    }
+  });
+}
 
 // Hook into fs.writeFile to read the events map into memory when written to file.
 if (!fs._writeFile) {
