@@ -74,7 +74,22 @@ _.each(files, (file) => {
 if (!fs._writeFile) {
   fs._writeFile = fs.writeFile;
   fs.writeFile = function(file, data) {
-    Events.parseFile(data);
+    if (/\.meteor\/local\/plugin\-cache\/ecmascript\//i.test(file)) {
+      try {
+        let options = JSON.parse(data);
+        let filename;
+        if (fs.existsSync(`${programPath}/app${options.map.file}`)) {
+          filename = `app${options.map.file}`;
+        }
+        else if (fs.existsSync(`${programPath}/packages${options.map.file}`)) {
+          filename = `packages${options.map.file}`;
+        }
+        if (filename) {
+          filename = filename.replace(/\.map$/i, '');
+          Events.findEventsInCode(filename, options.code);
+        }
+      } catch (e) {}
+    }
     fs._writeFile.apply(fs, arguments);
   }
 }
