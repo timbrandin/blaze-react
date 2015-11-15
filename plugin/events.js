@@ -26,7 +26,7 @@ Events = class {
         if (file[template]) {
           _.extend(events, file[template]);
         }
-      })
+      });
       return events;
     }
     return {};
