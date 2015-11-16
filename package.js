@@ -26,7 +26,8 @@ Package.registerBuildPlugin({
     'plugin/template.js'
   ],
   npmDependencies: {
-    'cheerio': '0.7.0'
+    'cheerio': '0.7.0',
+    'babel-core': '5.8.24'
   }
 });
 
@@ -69,6 +70,7 @@ Package.onUse(function (api) {
   ], 'server');
 
   api.addFiles([
+    'lib/react-events.js',
     'lib/client.browserify.js',
     'lib/exports.js'
   ], 'client');

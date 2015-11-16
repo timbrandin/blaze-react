@@ -104,6 +104,10 @@ class ReactTemplateCompiler {
 
       source = ReactCompiler.parse(original);
       const result = ReactTemplateCompiler.transpile(source, inputFile);
+
+      // Inject our element creator to enable injecting events at the right before rendering.
+      result.code = result.code.replace(/React\.createElement\(/g, 'RT.createElement.call(component, context, ');
+
       toBeAdded.data = result.code;
       toBeAdded.hash = result.hash;
       toBeAdded.sourceMap = result.map;

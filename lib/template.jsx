@@ -281,6 +281,10 @@ BlazeReact = class extends React.Component {
     return this._allSubsReady;
   }
 
+  callEvent(selector) {
+    console.log(attributes);
+  }
+
   render() {
     return ReactTemplate[this.className](this, this.data);
   }
