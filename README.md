@@ -15,7 +15,7 @@ meteor add timbrandin:blaze-react
 ## Demo
 
 * Add new demo here... I.e. Microscope.
-* http://spacedropcms.org (https://github.com/spacedrop/spacedropcms-org)
+* http://spacedropcms.org (https://github.com/spacedrop/spacedrop)
 * http://timbrandin.com (https://github.com/timbrandin/timbrandin)
 
 ## Getting started
