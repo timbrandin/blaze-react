@@ -26,7 +26,7 @@ meteor add timbrandin:blaze-react
 
 - [x] .html.jsx templates
 - [x] Blaze helpers
-- [ ] Blaze helper context (with the data from the context)
+- [x] Blaze helper context (with the data from the context)
 - [x] Blaze onCreated @TwinTailsX
 - [x] Blaze events
 - [x] Blaze onRendered @TwinTailsX
@@ -39,7 +39,7 @@ meteor add timbrandin:blaze-react
 - [x] Spacebars ={{helper}} (SafeString – Dynamic Attribute Value)
 - [x] Spacebars {{#if}}
 - [x] Spacebars {{else}} {{/if}}
-- [ ] Spacebars {{#each}}
+- [x] Spacebars {{#each}}
 - [x] Spacebars {{#each in}}
 - [ ] Spacebars {{else}} {{/each}}
 - [ ] Spacebars {{#with}}
