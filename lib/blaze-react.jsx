@@ -318,7 +318,6 @@ BlazeReact = class extends React.Component {
 
   // Helper to lookup and return a template or component.
   _inject(props) {
-    console.log(props);
     // A component exists.
     if (Template && Template[props.__name]) {
       return React.createElement(Template[props.__name], _.omit(props, '__name'));
