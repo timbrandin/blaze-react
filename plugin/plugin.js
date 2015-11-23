@@ -53,7 +53,9 @@ class ReactTemplateCompiler extends BabelCompiler {
     inputFiles.forEach((inputFile) => {
       let content = inputFile.getContentsAsString();
       inputFile.getContentsAsString = function() {
-        return ReactCompiler.parse(content);
+        let parsed = ReactCompiler.parse(content);
+        console.log(parsed);
+        return parsed;
       };
     });
 

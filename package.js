@@ -22,10 +22,6 @@ Package.registerBuildPlugin({
   ]
 });
 
-Npm.depends({
-  "classnames": "2.1.3"
-});
-
 Package.onUse(function (api) {
   api.versionsFrom('1.2.1');
 
@@ -33,41 +29,29 @@ Package.onUse(function (api) {
     'ecmascript@0.1.6',
     'underscore@1.0.4',
     'isobuild:compiler-plugin@1.0.0',
-    'babel-compiler',
-    'react-runtime@0.14.1_1'
-  ]);
-  api.imply([
-    'ecmascript@0.1.6',
-    'babel-runtime@0.1.4',
-    'ecmascript-runtime',
-    'promise',
+    // 'babel-compiler',
     'react-runtime@0.14.1_1',
-    'kadira:dochead@1.3.2'
-  ]);
-
-  api.use([
     'jsx@0.1.6',
     'check',
     'minimongo'
   ]);
-
-  api.use(['cosmos:browserify@0.8.3'], 'client');
+  api.imply([
+    'ecmascript@0.1.6',
+    'babel-runtime@0.1.4',
+    // 'ecmascript-runtime',
+    'promise',
+    'react-runtime@0.14.1_1',
+    'kadira:dochead@1.3.2',
+    'timbrandin:safestring',
+    'timbrandin:classnames'
+  ]);
 
   api.use('kadira:flow-router-ssr@3.5.0', ['client', 'server'], {weak: true});
 
   api.addFiles([
-    'lib/exports-server.js',
-    'lib/exports.js',
-  ], 'server');
-
-  api.addFiles([
-    'lib/client.browserify.js',
-    'lib/exports.js'
-  ], 'client');
-
-  api.addFiles([
-    'lib/template.jsx'
+    'lib/blaze-react.jsx',
+    'lib/create-from-blaze.js'
   ]);
 
-  api.export(['RT', 'ReactTemplate', 'Template']);
+  api.export(['SafeString', 'classNames',  'ReactTemplate', 'Template']);
 });

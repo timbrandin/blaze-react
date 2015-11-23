@@ -281,7 +281,58 @@ BlazeReact = class extends React.Component {
     return this._allSubsReady;
   }
 
+  // Helper to lookup a referenced name in the context.
+  _lookup(name) {
+    const tests = name.split('.');
+    console.log(name);
+    console.log(this);
+    // if (!context) {
+    //   return false;
+    // }
+    // // Look in the context for a matching dot-object pattern.
+    // let obj = context;
+    // for (let i in tests) {
+    //   let test = tests[i];
+    //   if (typeof obj === 'undefined') {
+    //     return false;
+    //   }
+    //   // If we're running through an each-in loop pass on the context.
+    //   if (i == tests.length - 1 && context.__context) {
+    //     props = Object.getOwnPropertyDescriptor(obj, test);
+    //     if (props.hasOwnProperty('get')) {
+    //       obj = props.get.call(context.__context);
+    //     }
+    //     else {
+    //       obj = props.value;
+    //     }
+    //   }
+    //   else {
+    //     // Iterate on to next child in dot-object pattern.
+    //     obj = obj[test];
+    //   }
+    // }
+    // // Last check if undefined.
+    // if (typeof obj === 'undefined') {
+    //   return false;
+    // }
+    // return obj;
+  };
+
+  // Helper to lookup and return a template or component.
+  _inject(props) {
+    console.log(props);
+    // A component exists.
+    if (Template && Template[props.__name]) {
+      return React.createElement(Template[props.__name], _.omit(props, '__name'));
+    }
+    // A template exists.
+    else if (ReactTemplate[props.__name]) {
+      return React.createElement(ReactTemplate[props.__name], _.omit(props, '__name'));
+    }
+    return "";
+  }
+
   render() {
-    return ReactTemplate[this.className](this, this.data);
+    return ReactTemplate[this.className].call(this);
   }
 };
