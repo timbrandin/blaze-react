@@ -282,40 +282,38 @@ BlazeReact = class extends React.Component {
   }
 
   // Helper to lookup a referenced name in the context.
-  _lookup(name) {
+  _lookup(name, context) {
     const tests = name.split('.');
-    console.log(name);
-    console.log(this);
-    // if (!context) {
-    //   return false;
-    // }
-    // // Look in the context for a matching dot-object pattern.
-    // let obj = context;
-    // for (let i in tests) {
-    //   let test = tests[i];
-    //   if (typeof obj === 'undefined') {
-    //     return false;
-    //   }
-    //   // If we're running through an each-in loop pass on the context.
-    //   if (i == tests.length - 1 && context.__context) {
-    //     props = Object.getOwnPropertyDescriptor(obj, test);
-    //     if (props.hasOwnProperty('get')) {
-    //       obj = props.get.call(context.__context);
-    //     }
-    //     else {
-    //       obj = props.value;
-    //     }
-    //   }
-    //   else {
-    //     // Iterate on to next child in dot-object pattern.
-    //     obj = obj[test];
-    //   }
-    // }
-    // // Last check if undefined.
-    // if (typeof obj === 'undefined') {
-    //   return false;
-    // }
-    // return obj;
+    if (!context) {
+      return false;
+    }
+    // Look in the context for a matching dot-object pattern.
+    let obj = context;
+    for (let i in tests) {
+      let test = tests[i];
+      if (typeof obj === 'undefined') {
+        return false;
+      }
+      // If we're running through an each-in loop pass on the context.
+      if (i == tests.length - 1 && context.__context) {
+        props = Object.getOwnPropertyDescriptor(obj, test);
+        if (props.hasOwnProperty('get')) {
+          obj = props.get.call(context.__context);
+        }
+        else {
+          obj = props.value;
+        }
+      }
+      else {
+        // Iterate on to next child in dot-object pattern.
+        obj = obj[test];
+      }
+    }
+    // Last check if undefined.
+    if (typeof obj === 'undefined') {
+      return false;
+    }
+    return obj;
   };
 
   // Helper to lookup and return a template or component.
@@ -333,6 +331,6 @@ BlazeReact = class extends React.Component {
   }
 
   render() {
-    return ReactTemplate[this.className].call(this);
+    return ReactTemplate[this.className].call(this, this.data);
   }
 };
