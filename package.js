@@ -39,8 +39,8 @@ Package.onUse(function (api) {
     'babel-runtime@0.1.4',
     'react-runtime@0.14.1_1',
     'kadira:dochead@1.3.2',
-    'timbrandin:safestring',
-    'timbrandin:classnames'
+    'timbrandin:safestring@0.0.1',
+    'timbrandin:classnames@0.0.1'
   ]);
 
   api.use('kadira:flow-router-ssr@3.5.0', ['client', 'server'], {weak: true});
