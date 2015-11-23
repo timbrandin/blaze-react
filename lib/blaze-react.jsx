@@ -283,16 +283,33 @@ BlazeReact = class extends React.Component {
 
   // Helper to lookup a referenced name in the context.
   _lookup(name, context) {
+    let found = '';
+    let previousContext = context;
+
+    for(let ctx of [context, this.data, this.props.parent.data]) {
+      let value = this.__lookup(name, ctx, previousContext);
+      console.log(name, ctx, value);
+      if (value !== undefined) {
+        found = value;
+        break;
+      }
+      previousContext = ctx;
+    };
+
+    return found;
+  }
+
+  __lookup(name, context, previousContext) {
     const tests = name.split('.');
     if (!context) {
-      return false;
+      return;
     }
     // Look in the context for a matching dot-object pattern.
     let obj = context;
     for (let i in tests) {
       let test = tests[i];
       if (typeof obj === 'undefined') {
-        return false;
+        return;
       }
       // If we're running through an each-in loop pass on the context.
       if (i == tests.length - 1 && context.__context) {
@@ -306,15 +323,21 @@ BlazeReact = class extends React.Component {
       }
       else {
         // Iterate on to next child in dot-object pattern.
-        obj = obj[test];
+        props = Object.getOwnPropertyDescriptor(obj, test);
+        if (typeof obj == 'object' && props && props.hasOwnProperty('get')) {
+          obj = props.get.call(previousContext);
+        }
+        else {
+          obj = obj[test];
+        }
       }
     }
     // Last check if undefined.
     if (typeof obj === 'undefined') {
-      return false;
+      return;
     }
     return obj;
-  };
+  }
 
   // Helper to lookup and return a template or component.
   _inject(props) {
