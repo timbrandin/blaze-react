@@ -18,7 +18,7 @@ Package.registerBuildPlugin({
   sources: [
     'lib/template-regex.js',
     'lib/react-regex.js',
-    'plugin/template.js'
+    'plugin/plugin.js'
   ]
 });
 
