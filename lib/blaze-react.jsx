@@ -194,12 +194,12 @@ BlazeReact = class extends React.Component {
     this._allSubsReadyDep = this._allSubsReadyDep || new Tracker.Dependency();
     this._allSubsReady = this._allSubsReady || false;
     // Duplicate logic from Meteor.subscribe
-    var options = {};
+    let options = {};
     if (args.length) {
-      var lastParam = _.last(args);
+      let lastParam = _.last(args);
 
       // Match pattern to check if the last arg is an options argument
-      var lastParamOptionsPattern = {
+      let lastParamOptionsPattern = {
         onReady: Match.Optional(Function),
         // XXX COMPAT WITH 1.0.3.1 onError used to exist, but now we use
         // onStop with an error callback instead.
@@ -215,8 +215,8 @@ BlazeReact = class extends React.Component {
       }
     }
 
-    var subHandle;
-    var oldStopped = options.onStop;
+    let subHandle;
+    let oldStopped = options.onStop;
     options.onStop = (error) => {
       // When the subscription is stopped, remove it from the set of tracked
       // subscriptions to avoid this list growing without bound
@@ -234,8 +234,8 @@ BlazeReact = class extends React.Component {
       }
     };
 
-    var connection = options.connection;
-    var callbacks = _.pick(options, ["onReady", "onError", "onStop"]);
+    let connection = options.connection;
+    let callbacks = _.pick(options, ["onReady", "onError", "onStop"]);
 
     // The callbacks are passed as the last item in the arguments array passed to
     // View#subscribe

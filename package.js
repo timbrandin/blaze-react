@@ -29,7 +29,6 @@ Package.onUse(function (api) {
     'ecmascript@0.1.6',
     'underscore@1.0.4',
     'isobuild:compiler-plugin@1.0.0',
-    // 'babel-compiler',
     'react-runtime@0.14.1_1',
     'jsx@0.1.6',
     'check',
@@ -38,8 +37,6 @@ Package.onUse(function (api) {
   api.imply([
     'ecmascript@0.1.6',
     'babel-runtime@0.1.4',
-    // 'ecmascript-runtime',
-    'promise',
     'react-runtime@0.14.1_1',
     'kadira:dochead@1.3.2',
     'timbrandin:safestring',
@@ -53,5 +50,5 @@ Package.onUse(function (api) {
     'lib/create-from-blaze.js'
   ]);
 
-  api.export(['SafeString', 'classNames',  'ReactTemplate', 'Template']);
+  api.export(['ReactTemplate', 'Template']);
 });
