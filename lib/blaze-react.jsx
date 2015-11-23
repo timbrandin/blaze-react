@@ -288,7 +288,6 @@ BlazeReact = class extends React.Component {
 
     for(let ctx of [context, this.data, this.props.parent.data]) {
       let value = this.__lookup(name, ctx, previousContext);
-      console.log(name, ctx, value);
       if (value !== undefined) {
         found = value;
         break;
