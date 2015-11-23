@@ -9,7 +9,6 @@ Package.describe({
 Package.registerBuildPlugin({
   name: 'blaze-react',
   use: [
-    'babel-compiler@5.8.24_1',
     'ecmascript@0.1.6',
     'babel-compiler@5.8.24_1',
     'underscore@1.0.4',
@@ -17,17 +16,10 @@ Package.registerBuildPlugin({
     'tracker@1.0.9'
   ],
   sources: [
-    'lib/events-regex.js',
-    'plugin/events.js',
-
     'lib/template-regex.js',
     'lib/react-regex.js',
-    'lib/react-events.js',
     'plugin/template.js'
-  ],
-  npmDependencies: {
-    'cheerio': '0.7.0'
-  }
+  ]
 });
 
 Npm.depends({
