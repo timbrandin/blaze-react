@@ -313,11 +313,13 @@ BlazeReact = class extends React.Component {
       // If we're running through an each-in loop pass on the context.
       if (i == tests.length - 1 && context.__context) {
         props = Object.getOwnPropertyDescriptor(obj, test);
-        if (props.hasOwnProperty('get')) {
-          obj = props.get.call(context.__context);
-        }
-        else {
-          obj = props.value;
+        if (props) {
+          if (props.hasOwnProperty('get')) {
+            obj = props.get.call(context.__context);
+          }
+          else {
+            obj = props.value;
+          }
         }
       }
       else {
@@ -355,3 +357,8 @@ BlazeReact = class extends React.Component {
     return ReactTemplate[this.className].call(this, this.data);
   }
 };
+
+// If array is empty return the string instead.
+Array.prototype.else = function(string) {
+  return this.length == 0 ? string : '';
+}

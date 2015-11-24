@@ -17,7 +17,7 @@ ReactCompiler = class {
    * @param  {String} markup    The markup of the template.
    * @return {String}           Valid jsx markup.
    */
-  static parseMarkup(className, markup) {
+  static parseMarkup(markup) {
     ReactRegex.forEach(function (obj) {
       markup = markup.replace(obj.regex, obj.replace);
     });
@@ -53,7 +53,9 @@ class ReactTemplateCompiler extends BabelCompiler {
     inputFiles.forEach((inputFile) => {
       let content = inputFile.getContentsAsString();
       inputFile.getContentsAsString = function() {
-        return ReactCompiler.parse(content);
+        var v = ReactCompiler.parse(content);
+        console.log(v);
+        return v;
       };
     });
 
