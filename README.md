@@ -24,7 +24,7 @@ meteor add timbrandin:blaze-react
 
 ## Features
 
-- [x] .html.jsx templates
+- [x] .html to ReactTemplate
 - [x] Blaze helpers
 - [x] Blaze helper context (with the data from the context)
 - [x] Blaze onCreated @TwinTailsX
