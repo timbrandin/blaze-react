@@ -358,7 +358,9 @@ BlazeReact = class extends React.Component {
   }
 };
 
-// If array is empty return the string instead.
-Array.prototype.else = function(string) {
-  return this.length == 0 ? string : '';
+// Helper to replace an empty array with some text.
+if (!Array.prototype.else) {
+  Object.defineProperty(Array.prototype, 'else', {
+    value: function(string) { return this.length == 0 ? string : this; }
+  });
 }
