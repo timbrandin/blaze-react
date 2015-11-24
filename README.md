@@ -36,7 +36,7 @@ meteor add timbrandin:blaze-react
 - [x] Spacebars {{helper}} (SafeString)
 - [ ] Spacebars {{helper ..args}} (SafeString) (with arguments)
 - [x] Spacebars {{{helper}}} (raw HTML)
-- [ ] Spacebars {{{helper ..args}}} (SafeString) (with arguments)
+- [ ] Spacebars {{{helper ..args}}} (raw HTML) (with arguments)
 - [x] Spacebars "{{helper}}" (SafeString – In Attribute Values)
 - [x] Spacebars ={{helper}} (SafeString – Dynamic Attribute Value)
 - [x] Spacebars {{#if}}
