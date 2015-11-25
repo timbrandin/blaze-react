@@ -44,6 +44,7 @@ BlazeReact = class extends React.Component {
     this.data = {};
     this.events = Template[this.className]._events || {};
     this.helpers = Template[this.className]._helpers || {};
+    this._contexts = {};
 
     _.extend(this.helpers, Template._globalHelpers);
 
@@ -85,6 +86,8 @@ BlazeReact = class extends React.Component {
   }
 
   componentDidMount() {
+    this.bindEvents();
+
     Template[this.className]._callbacks = Template[this.className]._callbacks || {};
     Template[this.className]._callbacks.rendered = Template[this.className]._callbacks.rendered || [];
 
@@ -92,6 +95,10 @@ BlazeReact = class extends React.Component {
     _.each(Template[this.className]._callbacks.rendered, (func) => {
       func.apply(this);
     });
+  }
+
+  componentDidUpdate() {
+    this.bindEvents();
   }
 
   componentWillUnmount() {
@@ -351,6 +358,45 @@ BlazeReact = class extends React.Component {
       return React.createElement(ReactTemplate[props.__name], _.omit(props, '__name'));
     }
     return "";
+  }
+
+  /**
+   * Keep track of the context for the events.
+   */
+  _track(context) {
+    let key = Meteor.uuid();
+    this._contexts[key] = context;
+    return key;
+  }
+
+  /**
+   * Helper to bind events to dom nodes once.
+   */
+  bindEvents() {
+    const self = this;
+    const domNode = ReactDOM.findDOMNode(this);
+
+    // https://facebook.github.io/react/tips/dom-event-listeners.html
+    for (let key in this.events) {
+      let hash = btoa(key).replace(/=+$/, '');
+      let selectors = key.split(',');
+      for (let selector of selectors) {
+        let [event, select] = selector.trim().split(/\s(.+)?/);
+        let $el = $(select, domNode)
+        $el.unbind(`${event}.${hash}`);
+        $el.bind(`${event}.${hash}`, function(...args) {
+          // Append component instance as last in the arguments.
+          args.push(self);
+          // Get the key for the closest occurance of a context.
+          let contextKey = $(this).closest('[data-context]').data('context');
+          let context;
+          if (contextKey) {
+            context = self._contexts[contextKey];
+          }
+          self.events[key].apply(context, args);
+        });
+      }
+    }
   }
 
   render() {
