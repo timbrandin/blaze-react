@@ -41,7 +41,7 @@ meteor add timbrandin:blaze-react
 - [x] Spacebars ={{helper}} (SafeString – Dynamic Attribute Value)
 - [x] Spacebars {{#if}}
 - [x] Spacebars {{else}} {{/if}}
-- [ ] Spacebars {{else}} {{/if}} (nested)
+- [x] Spacebars {{else}} {{/if}} (nested)
 - [x] Spacebars {{#each}}
 - [x] Spacebars {{#each in}}
 - [x] Spacebars {{else}} {{/each}}
