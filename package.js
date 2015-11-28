@@ -12,14 +12,18 @@ Package.registerBuildPlugin({
     'ecmascript@0.1.6',
     'babel-compiler@5.8.24_1',
     'underscore@1.0.4',
-    'reactive-var@1.0.6',
-    'tracker@1.0.9'
+    'tracker@1.0.9',
   ],
   sources: [
+    // 'lib/xregexp.js',
     'lib/template-regex.js',
     'lib/react-regex.js',
+    'lib/react-template-compiler.js',
     'plugin/plugin.js'
-  ]
+  ],
+  npmDependencies: {
+    'xregexp': '3.0.0'
+  }
 });
 
 Package.onUse(function (api) {
@@ -51,4 +55,25 @@ Package.onUse(function (api) {
   ]);
 
   api.export(['ReactTemplate', 'Template']);
+});
+
+Npm.depends({'xregexp': '3.0.0'});
+
+Package.onTest(function (api) {
+  api.use([
+    'ecmascript@0.1.6',
+    'babel-compiler@5.8.24_1',
+    'underscore@1.0.4',
+    'tracker@1.0.9',
+  ]);
+
+  api.addFiles([
+    'lib/template-regex.js',
+    'lib/react-regex.js',
+    'lib/react-template-compiler.js'
+  ]);
+
+  api.use("tinytest");
+  api.use("timbrandin:blaze-react");
+  api.addFiles("test/test.js", "server");
 });
