@@ -1,4 +1,4 @@
-# Blaze React
+# Blaze React (devel)
 > **Blaze React** is a [Meteor](http://meteor.com) package which give you templates for React in a familiar [Blaze API](https://www.meteor.com/blaze) (giving you **helpers**, **events**, **onRendered**, **onCreated** etc) with a subset of [Spacebars](https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md) (aka Meteor flavored Handlebars).
 
 **Why React?** – Well it gives us faster pageloads, SEO without Spiderable, accessibility for users without JavaScript and general improvements in page rendering speed.
@@ -14,7 +14,7 @@ meteor add timbrandin:blaze-react
 
 ## Demo
 
-* Add new demo here... I.e. Microscope.
+* XXX Add new demo here... I.e. Microscope.
 * http://spacedropcms.org (https://github.com/spacedrop/spacedrop)
 * http://timbrandin.com (https://github.com/timbrandin/timbrandin)
 
