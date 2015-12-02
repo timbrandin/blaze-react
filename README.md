@@ -22,7 +22,7 @@ meteor add timbrandin:blaze-react
 
 > Currently this project is in flux until we have a preview-release, partly due to the announcement from MDG in developing a similar package that builds templates for React, but we think we can give this to you earlier than within a few months and with support for most of Blaze 1 features and Spacebars. 
 
-> Add example code to get started.
+> XXX Add example code to get started.
 
 ## Features
 
