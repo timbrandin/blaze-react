@@ -14,7 +14,7 @@ meteor add timbrandin:blaze-react
 
 ## Demo
 
-* XXX Add new demo here... I.e. Microscope.
+* **XXX** Add new demo here... I.e. Microscope.
 * http://spacedropcms.org (https://github.com/spacedrop/spacedrop)
 * http://timbrandin.com (https://github.com/timbrandin/timbrandin)
 
@@ -22,7 +22,7 @@ meteor add timbrandin:blaze-react
 
 > Currently this project is in flux until we have a preview-release, partly due to the announcement from MDG in developing a similar package that builds templates for React, but we think we can give this to you earlier than within a few months and with support for most of Blaze 1 features and Spacebars. 
 
-> XXX Add example code to get started.
+> **XXX** Add example code to get started.
 
 ## Features
 
