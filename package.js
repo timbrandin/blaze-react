@@ -51,10 +51,13 @@ Package.onUse(function (api) {
 
   api.addFiles([
     'lib/blaze-react.jsx',
-    'lib/create-from-blaze.js'
+    'lib/create-from-blaze.js',
+    'lib/fragment.jsx',
+    'lib/inject.jsx',
+    'lib/context-proxy.js'
   ]);
 
-  api.export(['ReactTemplate', 'Template']);
+  api.export(['ReactTemplate', 'Template', 'Fragment', 'Inject', 'ContextProxy']);
 });
 
 Npm.depends({'xregexp': '3.0.0'});
