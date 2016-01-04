@@ -1,5 +1,31 @@
 # Change Log
 
+### v0.4.0
+
+> Project renamed to **Blaze React** (timbrandin:blaze-react), formerly known as **Sideburns** (timbrandin:sideburns) and React Templates (timbrandin:react-templates).
+
+* After a suggestion from @facespacey we're consolidating timbrandin:react-templates and timbrandin:sideburns to new package timbrandin:blaze-react.
+* Simplified code for easier maintainance.
+* Removed the need for users to remove the `ecmascript` package.
+
+### v0.3.2
+
+* Correct helper contexts solving from (https://github.com/peerlibrary/meteor-blaze-components/blob/master/lookup.js#L94):
+  * 2. look up a binding by traversing the lexical view hierarchy inside the current template
+
+### v0.3.1
+
+* Blaze onCreated @TwinTailsX
+* Blaze onRendered @TwinTailsX
+* Blaze onDestroyed @TwinTailsX
+* Blaze autorun @TwinTailsX @facespacey
+* Blaze subscribe @TwinTailsX @facespacey
+
+### v0.3.0
+
+* Using the new toolchain and transpiling `.html` and `.js` files instead of `.html.jsx`
+* Code for components can be split up in files instead as before in one file, closer to how Blaze works.
+
 ### v0.2.4
 
 * Now including React ES6 JSX files instead of compiling to ES5 JS files.
