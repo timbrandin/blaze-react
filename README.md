@@ -1,4 +1,4 @@
-# Blaze React (devel)
+# Blaze React (0.4.0)
 > **Blaze React** is a [Meteor](http://meteor.com) package which give you templates for React in a familiar [Blaze API](https://www.meteor.com/blaze) (giving you **helpers**, **events**, **onRendered**, **onCreated** etc) with a subset of [Spacebars](https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md) (aka Meteor flavored Handlebars).
 
 **Why React?** – Well it gives us faster pageloads, SEO without Spiderable, accessibility for users without JavaScript and general improvements in page rendering speed.
@@ -20,7 +20,7 @@ meteor add timbrandin:blaze-react
 
 ## Getting started
 
-> Currently this project is in flux until we have a preview-release, partly due to the announcement from MDG in developing a similar package that builds templates for React, but we think we can give this to you earlier than within a few months and with support for most of Blaze 1 features and Spacebars. 
+> Currently this project is in flux until we have a preview-release, partly due to the announcement from MDG in developing a similar package that builds templates for React, but we think we can give this to you earlier than within a few months and with support for most of Blaze 1 features and Spacebars.
 
 > **XXX** Add example code to get started.
 
@@ -58,7 +58,7 @@ meteor add timbrandin:blaze-react
 - [ ] Spacebars {{#helper}}} (Block helpers)
 - [ ] Spacebars {{#helper ...args}}} (Block helpers with arguments)
 - [ ] Spacebars {{/helper}}} (Block helpers)
-- [ ] Spacebars parentData() 
+- [ ] Spacebars parentData()
 - [ ] Spacebars {{../../helper}}
 - [ ] Throw notice when the syntax is broken.
 - [ ] Transpilation as a Babel plugin, i.e. [babel-preset-react](https://github.com/babel/babel/tree/master/packages/babel-preset-react)
