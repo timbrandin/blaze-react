@@ -9,7 +9,7 @@ Tinytest.add(
     `;
     test.equal(ReactCompiler.parseMarkup(str), `
       <div>
-        {_.toArray(context('docs')).length > 0 ? _.toArray(context('docs')).map((context, index) => {return (<Fragment key={index} context={context} component={this}>
+        {context('docs', 'array').length > 0 ? context('docs', 'array').map((context, index) => {return (<Fragment key={index} context={context} component={this}>
           Hello world
         </Fragment>)}):''}
       </div>
@@ -29,7 +29,7 @@ Tinytest.add(
     `;
     test.equal(ReactCompiler.parseMarkup(str), `
       <div>
-        {_.toArray(context('docs')).length > 0 ? _.toArray(context('docs')).map((context, index) => {return (<Fragment key={index} context={context} component={this}>
+        {context('docs', 'array').length > 0 ? context('docs', 'array').map((context, index) => {return (<Fragment key={index} context={context} component={this}>
           Hello world
         </Fragment>)}):(<Fragment>
           No documents found.
@@ -51,8 +51,8 @@ Tinytest.add(
     `;
     test.equal(ReactCompiler.parseMarkup(str), `
       <div>
-        {_.toArray(context('docs')).length > 0 ? _.toArray(context('docs')).map((context, index) => {return (<Fragment key={index} context={context} component={this}>
-          {_.toArray(context('docs')).length > 0 ? _.toArray(context('docs')).map((context, index) => {return (<Fragment key={index} context={context} component={this}>
+        {context('docs', 'array').length > 0 ? context('docs', 'array').map((context, index) => {return (<Fragment key={index} context={context} component={this}>
+          {context('docs', 'array').length > 0 ? context('docs', 'array').map((context, index) => {return (<Fragment key={index} context={context} component={this}>
             Hello world
           </Fragment>)}):''}
         </Fragment>)}):''}
@@ -71,7 +71,7 @@ Tinytest.add(
     `;
     test.equal(ReactCompiler.parseMarkup(str), `
       <div>
-        {_.toArray(context('docs')).length > 0 ? _.toArray(context('docs')).map((doc, index) => {return (<Fragment key={index} context={doc} component={this}>
+        {context('docs', 'array').length > 0 ? context('docs', 'array', 'doc').map((context, index) => {return (<Fragment key={index} context={context} component={this}>
           Hello world
         </Fragment>)}):''}
       </div>
@@ -91,8 +91,8 @@ Tinytest.add(
     `;
     test.equal(ReactCompiler.parseMarkup(str), `
       <div>
-        {_.toArray(context('docs')).length > 0 ? _.toArray(context('docs')).map((doc, index) => {return (<Fragment key={index} context={doc} component={this}>
-          {_.toArray(context('docs')).length > 0 ? _.toArray(context('docs')).map((doc, index) => {return (<Fragment key={index} context={doc} component={this}>
+        {context('docs', 'array').length > 0 ? context('docs', 'array', 'doc').map((context, index) => {return (<Fragment key={index} context={context} component={this}>
+          {context('docs', 'array').length > 0 ? context('docs', 'array', 'doc').map((context, index) => {return (<Fragment key={index} context={context} component={this}>
             Hello world
           </Fragment>)}):''}
         </Fragment>)}):''}
@@ -582,7 +582,7 @@ Tinytest.add(
       </template>
     `;
     test.equal(ReactCompiler.parse(str), `
-      React.Component.createFromBlaze("template", "template", function(context) {return (<Fragment context={context}>
+      React.Component.createFromBlaze("template", "template", function(context) {return (<Fragment context={context} component={this}>
         <div>Hello world</div>
       </Fragment>)});
     `);
@@ -596,7 +596,7 @@ Tinytest.add(
       </body>
     `;
     test.equal(ReactCompiler.parse(str), `
-      React.Component.createFromBlaze("body", "body", function(context) {return (<Fragment context={context}>
+      React.Component.createFromBlaze("body", "body", function(context) {return (<Fragment context={context} component={this}>
         <div>Hello world</div>
       </Fragment>)});
     `);
@@ -610,7 +610,7 @@ Tinytest.add(
       </body>
     `;
     test.equal(ReactCompiler.parse(str), `
-      React.Component.createFromBlaze("body", "body", function(context) {return (<Fragment context={context}>
+      React.Component.createFromBlaze("body", "body", function(context) {return (<Fragment context={context} component={this}>
         <Inject __template='hello' parent={this}/>
       </Fragment>)});
     `);
