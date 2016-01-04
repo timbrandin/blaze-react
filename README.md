@@ -58,3 +58,7 @@ meteor add timbrandin:blaze-react
 - [ ] Spacebars {{#helper}}} (Block helpers)
 - [ ] Spacebars {{#helper ...args}}} (Block helpers with arguments)
 - [ ] Spacebars {{/helper}}} (Block helpers)
+- [ ] Spacebars parentData() 
+- [ ] Spacebars {{../../helper}}
+- [ ] Throw notice when the syntax is broken.
+- [ ] Transpilation as a Babel plugin, i.e. [babel-preset-react](https://github.com/babel/babel/tree/master/packages/babel-preset-react)
