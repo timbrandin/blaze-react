@@ -36,9 +36,9 @@ meteor add timbrandin:blaze-react
 - [x] Blaze autorun @TwinTailsX @facespacey
 - [x] Blaze subscribe @TwinTailsX @facespacey
 - [x] Spacebars {{helper}} (SafeString)
-- [ ] Spacebars {{helper ..args}} (SafeString) (with arguments)
+- [x] Spacebars {{helper ..args}} (SafeString) (with arguments)
 - [x] Spacebars {{{helper}}} (raw HTML)
-- [ ] Spacebars {{{helper ..args}}} (raw HTML) (with arguments)
+- [x] Spacebars {{{helper ..args}}} (raw HTML) (with arguments)
 - [x] Spacebars "{{helper}}" (SafeString – In Attribute Values)
 - [x] Spacebars ={{helper}} (SafeString – Dynamic Attribute Value)
 - [x] Spacebars {{#if}}
@@ -49,12 +49,12 @@ meteor add timbrandin:blaze-react
 - [x] Spacebars {{else}} {{/each}}
 - [x] Spacebars {{else in}} {{/each}}
 - [x] Spacebars {{else}} {{/each}} (nested)
-- [ ] Spacebars {{#with}}
-- [ ] Spacebars {{else}} {{#with}}
-- [ ] Spacebars {{else}} {{#with}} (nested)
+- [x] Spacebars {{#with}}
+- [x] Spacebars {{else}} {{#with}}
+- [x] Spacebars {{else}} {{#with}} (nested)
 - [x] Spacebars {{#unless}}
 - [x] Spacebars {{else}} {{/unless}}
-- [ ] Spacebars {{else}} {{/unless}} (nested)
+- [x] Spacebars {{else}} {{/unless}} (nested)
 - [ ] Spacebars {{#helper}}} (Block helpers)
 - [ ] Spacebars {{#helper ...args}}} (Block helpers with arguments)
 - [ ] Spacebars {{/helper}}} (Block helpers)
