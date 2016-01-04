@@ -26,10 +26,6 @@ Fragment = class Fragment extends React.Component {
   render(): ?ReactElement {
     let children = this.props.children;
 
-    const markup = (key) => {
-      return {__html: context(key)}
-    };
-
     if (!children) {
       return null;
     }

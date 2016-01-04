@@ -57,7 +57,7 @@ Package.onUse(function (api) {
     'lib/context-proxy.js'
   ]);
 
-  api.export(['ReactTemplate', 'Template', 'Fragment', 'Inject', 'ContextProxy']);
+  api.export(['ReactTemplate', 'Template', 'Fragment', 'Inject']);
 });
 
 Npm.depends({'xregexp': '3.0.0'});

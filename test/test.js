@@ -582,7 +582,7 @@ Tinytest.add(
       </template>
     `;
     test.equal(ReactCompiler.parse(str), `
-      React.Component.createFromBlaze("template", "template", function(context) { return (<Fragment context={context}>
+      React.Component.createFromBlaze("template", "template", function(context) {return (<Fragment context={context}>
         <div>Hello world</div>
       </Fragment>)});
     `);
@@ -596,7 +596,7 @@ Tinytest.add(
       </body>
     `;
     test.equal(ReactCompiler.parse(str), `
-      React.Component.createFromBlaze("body", "body", function(context) { return (<Fragment context={context}>
+      React.Component.createFromBlaze("body", "body", function(context) {return (<Fragment context={context}>
         <div>Hello world</div>
       </Fragment>)});
     `);
@@ -610,7 +610,7 @@ Tinytest.add(
       </body>
     `;
     test.equal(ReactCompiler.parse(str), `
-      React.Component.createFromBlaze("body", "body", function(context) { return (<Fragment context={context}>
+      React.Component.createFromBlaze("body", "body", function(context) {return (<Fragment context={context}>
         <Inject __template='hello' parent={this}/>
       </Fragment>)});
     `);

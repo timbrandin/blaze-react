@@ -40,6 +40,7 @@ BlazeReact = class extends React.Component {
    */
   init() {
     const self = this;
+    this.state = {};
     this._comps = {};
     this.data = {};
     this.events = Template[this.className]._events || {};
@@ -53,9 +54,10 @@ BlazeReact = class extends React.Component {
       Object.defineProperty(this.data, helper, {
         get: function(...args) {
           args.push(self);
+
           if (typeof self._comps[helper] === 'undefined') {
-            // Create a computation for the helper.
             let state = {}, initial = true;
+            // Create a computation for the helper.
             self._comps[helper] = Tracker.autorun(() => {
               state[helper] = fn.apply(this, args);
               // If helper returns a cursor, let's fetch the data for the state.
@@ -69,7 +71,13 @@ BlazeReact = class extends React.Component {
             });
             initial = false;
           }
-          return fn.apply(this, args);
+
+          let value = fn.apply(this, args);
+          // If helper returns a cursor, let's fetch the data for the state.
+          if (value instanceof LocalCollection.Cursor) {
+            value = value.fetch();
+          }
+          return value;
         }
       });
     });
@@ -288,88 +296,6 @@ BlazeReact = class extends React.Component {
     return this._allSubsReady;
   }
 
-  // // Helper to lookup a referenced name in the context.
-  // _lookup(name, context) {
-  //   let found = '';
-  //   let previousContext = context;
-  //
-  //   for(let ctx of [context, this.data, this.props.parent.data]) {
-  //     let value = this.__lookup(name, ctx, previousContext);
-  //     if (value !== undefined) {
-  //       found = value;
-  //       break;
-  //     }
-  //     previousContext = ctx;
-  //   };
-  //
-  //   return found;
-  // }
-  //
-  // __lookup(name, context, previousContext) {
-  //   const tests = name.split('.');
-  //   if (!context) {
-  //     return;
-  //   }
-  //   // Look in the context for a matching dot-object pattern.
-  //   let obj = context;
-  //   for (let i in tests) {
-  //     let test = tests[i];
-  //     if (typeof obj === 'undefined') {
-  //       return;
-  //     }
-  //     // If we're running through an each-in loop pass on the context.
-  //     if (i == tests.length - 1 && context.__context) {
-  //       props = Object.getOwnPropertyDescriptor(obj, test);
-  //       if (props) {
-  //         if (props.hasOwnProperty('get')) {
-  //           obj = props.get.call(context.__context);
-  //         }
-  //         else {
-  //           obj = props.value;
-  //         }
-  //       }
-  //     }
-  //     else {
-  //       // Iterate on to next child in dot-object pattern.
-  //       props = Object.getOwnPropertyDescriptor(obj, test);
-  //       if (typeof obj == 'object' && props && props.hasOwnProperty('get')) {
-  //         obj = props.get.call(previousContext);
-  //       }
-  //       else {
-  //         obj = obj[test];
-  //       }
-  //     }
-  //   }
-  //   // Last check if undefined.
-  //   if (typeof obj === 'undefined') {
-  //     return;
-  //   }
-  //   return obj;
-  // }
-
-  // // Helper to lookup and return a template or component.
-  // _inject(props) {
-  //   // A component exists.
-  //   if (Template && Template[props.__name]) {
-  //     return React.createElement(Template[props.__name], _.omit(props, '__name'));
-  //   }
-  //   // A template exists.
-  //   else if (ReactTemplate[props.__name]) {
-  //     return React.createElement(ReactTemplate[props.__name], _.omit(props, '__name'));
-  //   }
-  //   return "";
-  // }
-
-  // /**
-  //  * Keep track of the context for the events.
-  //  */
-  // _track(context) {
-  //   // Initalize or increment the counter for the context for this element.
-  //   this._contextCounter = (this._contextCounter || 0) + 1;
-  //   this._contexts[this._contextCounter] = context;
-  //   return this._contextCounter;
-  // }
-
   /**
    * Helper to bind events to dom nodes once.
    */
@@ -389,10 +315,13 @@ BlazeReact = class extends React.Component {
           // Append component instance as last in the arguments.
           args.push(self);
           // Get the key for the closest occurance of a context.
-          let contextKey = $(this).closest('[data-context]').data('context');
+          let contextKey = $(this).closest('[data-ctx]').data('reactid');
           let context;
           if (contextKey) {
-            context = self._contexts[contextKey];
+            context = {};
+            if (typeof self._contexts[contextKey] == 'function') {
+              context = _.clone(self._contexts[contextKey]('', 'value'));
+            };
           }
           self.events[key].apply(context, args);
         });
@@ -404,10 +333,3 @@ BlazeReact = class extends React.Component {
     return ReactTemplate[this.className].call(this, this.data);
   }
 };
-
-// // Helper to replace an empty array with some text.
-// if (!Array.prototype.else) {
-//   Object.defineProperty(Array.prototype, 'else', {
-//     value: function(string) { return this.length == 0 ? string : this; }
-//   });
-// }
